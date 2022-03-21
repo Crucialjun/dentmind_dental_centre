@@ -1,5 +1,8 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
+import 'package:dentmind_dental_centre/utils/custom_scroll.dart';
+import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({Key? key}) : super(key: key);
@@ -63,7 +66,8 @@ class _MainDashboardState extends State<MainDashboard> {
                     Expanded(
                         child: TextField(
                       decoration: InputDecoration(
-                          hintStyle: TextStyle(fontSize: 18),
+                          hintStyle:
+                              TextStyle(fontSize: 18, color: primaryAppColor),
                           border: InputBorder.none,
                           hintText: "Search for service"),
                     )),
@@ -75,6 +79,86 @@ class _MainDashboardState extends State<MainDashboard> {
                       color: accentAppColor,
                     )
                   ]),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Browse by category",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16),
+                  ),
+                  Text(
+                    "View All",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w200,
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 2,
+                        color: primaryAppColor),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Container(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    CategoryContainer(
+                      serviceName: 'General Dentistry',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Restorative Dentistry',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Periontology Dentistry',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Dental Surgery',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Pediatric Dentistry',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Cosmetic Dentistry',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Prosthetic Dentistry',
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    CategoryContainer(
+                      serviceName: 'Dental X-Rays',
+                    ),
+                  ],
                 ),
               ),
             ],
