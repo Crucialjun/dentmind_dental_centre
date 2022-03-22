@@ -1,4 +1,5 @@
 import 'package:dentmind_dental_centre/screens/main_dashboard.dart';
+import 'package:dentmind_dental_centre/screens/onboarding_screen.dart';
 import 'package:dentmind_dental_centre/utils/custom_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScroll(),
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -21,6 +23,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(secondary: const Color(0xFFfcb017)),
         ),
-        home: const MainDashboard());
+        home: const OnboardingScreen());
   }
 }
