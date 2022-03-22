@@ -61,7 +61,7 @@ Widget _page(String assetName, String title, String description) {
       title,
       textAlign: TextAlign.center,
       style: const TextStyle(
-          color: primaryAppColor, fontWeight: FontWeight.bold, fontSize: 24),
+          color: primaryAppColor, fontWeight: FontWeight.bold, fontSize: 28),
     ),
     const SizedBox(
       height: 8,

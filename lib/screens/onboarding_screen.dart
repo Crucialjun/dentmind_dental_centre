@@ -17,27 +17,32 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   app_name,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 24,
                       color: primaryAppColor,
                       fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  "Skip",
-                  style: TextStyle(color: primaryAppColor, fontSize: 16),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'dashboard');
+                  },
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(color: primaryAppColor, fontSize: 22),
+                  ),
                 )
               ],
             ),
-            Flexible(child: OnboardingPageView()),
+            const Flexible(child: OnboardingPageView()),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: primaryAppColor),
               onPressed: () {},
               child: const Text("Create an Account"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             OutlinedButton(
