@@ -16,20 +16,24 @@ class CategoryContainer extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(16)),
-        width: 120,
-        height: 120,
+        width: 150,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(child: SvgPicture.asset('assets/service_one.svg')),
               const SizedBox(
                 height: 4,
               ),
-              Text(
-                serviceName,
-                style: const TextStyle(
-                  color: primaryAppColor,
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  serviceName,
+                  style: const TextStyle(
+                    color: primaryAppColor,
+                  ),
                 ),
               ),
             ],
