@@ -27,7 +27,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, 'dashboard');
+                    Navigator.pushReplacementNamed(context, authcheckerRoute);
                   },
                   child: const Text(
                     "Skip",
@@ -46,7 +46,9 @@ class OnboardingScreen extends StatelessWidget {
               height: 8,
             ),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, signinRoute);
+              },
               style: OutlinedButton.styleFrom(
                   primary: primaryAppColor,
                   backgroundColor: Colors.white,

@@ -1,6 +1,5 @@
-import 'package:dentmind_dental_centre/providers/onboarding_provider.dart';
+import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = prefs.getBool("isFirstTime") ?? true;
     if (isFirstTime) {
-      Navigator.pushReplacementNamed(context, "onboarding");
+      Navigator.pushReplacementNamed(context, onboardingRoute);
       prefs.setBool("isFirstTime", false);
     } else {
-      Navigator.pushReplacementNamed(context, "dashboard");
+      Navigator.pushReplacementNamed(context, authcheckerRoute);
     }
   }
 }

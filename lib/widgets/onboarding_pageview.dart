@@ -1,7 +1,6 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingPageView extends StatefulWidget {
@@ -20,6 +19,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView> {
       children: [
         Expanded(
           child: PageView(
+            physics: const BouncingScrollPhysics(),
             controller: _pageController,
             children: [
               _page("page_view_image1", "Quality is First and Foremost",

@@ -1,9 +1,7 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
-import 'package:dentmind_dental_centre/utils/custom_scroll.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({Key? key}) : super(key: key);
@@ -110,7 +108,7 @@ class _MainDashboardState extends State<MainDashboard> {
                 const SizedBox(
                   height: 8,
                 ),
-                Container(
+                SizedBox(
                   height: 120,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
