@@ -2,11 +2,14 @@ import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/screens/main_dashboard.dart';
 import 'package:dentmind_dental_centre/screens/onboarding_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_in_screen.dart';
+import 'package:dentmind_dental_centre/screens/sign_up_screen.dart';
 import 'package:dentmind_dental_centre/screens/splash_screen.dart';
 import 'package:dentmind_dental_centre/utils/auth_checker.dart';
 import 'package:dentmind_dental_centre/utils/custom_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'global_constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,9 +23,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScroll(),
-        title: app_name,
+        title: appName,
         theme: ThemeData(
-          fontFamily: GoogleFonts.heebo().fontFamily,
+          fontFamily: GoogleFonts.poppins().fontFamily,
           primaryColor: const Color(0xFF0f4b87),
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(secondary: const Color(0xFFfcb017)),
@@ -33,7 +36,8 @@ class MyApp extends StatelessWidget {
           onboardingRoute: (context) => const OnboardingScreen(),
           dashboardRoute: (context) => const MainDashboard(),
           signinRoute: (context) => const SignInScreen(),
-          authcheckerRoute: (context) => const AuthChecker(),
+          signupRoute: (context) => const SignUpScreen(),
+          authCheckerRoute: (context) => const AuthChecker(),
         });
   }
 }

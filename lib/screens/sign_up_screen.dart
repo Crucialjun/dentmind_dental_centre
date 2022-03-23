@@ -1,11 +1,10 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
-import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
             Text(
-              "Let's Log in",
+              "Let's Create an Account",
               style: TextStyle(
                   fontFamily: GoogleFonts.chivo().fontFamily,
                   fontWeight: FontWeight.bold,
@@ -32,7 +31,7 @@ class SignInScreen extends StatelessWidget {
                   color: Colors.black),
             ),
             const Text(
-              "Welcome back, you've been missed!",
+              "Create your Dentmind Account in an easy way ",
               style: TextStyle(fontSize: 18),
             ),
             const SizedBox(
@@ -125,20 +124,15 @@ class SignInScreen extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Dont have an account?"),
-                const SizedBox(
+              children: const [
+                Text("Dont have an account?"),
+                SizedBox(
                   width: 4,
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, signupRoute);
-                  },
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500, color: Colors.blue),
-                  ),
+                Text(
+                  "Sign Up",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500, color: Colors.blue),
                 ),
               ],
             ),

@@ -19,7 +19,7 @@ class OnboardingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  app_name,
+                  appName,
                   style: TextStyle(
                       fontSize: 24,
                       color: primaryAppColor,
@@ -27,7 +27,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, authcheckerRoute);
+                    Navigator.pushReplacementNamed(context, authCheckerRoute);
                   },
                   child: const Text(
                     "Skip",
@@ -36,10 +36,13 @@ class OnboardingScreen extends StatelessWidget {
                 )
               ],
             ),
+            Image.asset('assets/logo.png'),
             const Flexible(child: OnboardingPageView()),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: primaryAppColor),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, signupRoute);
+              },
               child: const Text("Create an Account"),
             ),
             const SizedBox(

@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacementNamed(context, onboardingRoute);
       prefs.setBool("isFirstTime", false);
     } else {
-      Navigator.pushReplacementNamed(context, authcheckerRoute);
+      Navigator.pushReplacementNamed(context, authCheckerRoute);
     }
   }
 }
