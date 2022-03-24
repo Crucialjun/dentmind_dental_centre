@@ -1,4 +1,6 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
+import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
+import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +10,11 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _firstNameController = TextEditingController();
+    TextEditingController _lastNameController = TextEditingController();
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+    TextEditingController _confirmPasswordController = TextEditingController();
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -16,10 +23,13 @@ class SignUpScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Image.asset(
-                "assets/logo.png",
-                height: 200,
-                width: 200,
+              child: Hero(
+                tag: 'logo',
+                child: Image.asset(
+                  "assets/logo.png",
+                  height: 200,
+                  width: 200,
+                ),
               ),
             ),
             Text(
@@ -37,7 +47,69 @@ class SignUpScreen extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    controller: _firstNameController,
+                    decoration: InputDecoration(
+                        labelStyle: const TextStyle(
+                            color: primaryAppColor,
+                            fontWeight: FontWeight.w600),
+                        labelText: "First Name",
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: primaryAppColor, width: 2.0),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: primaryAppColor, width: 2.0),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: accentAppColor, width: 2.0),
+                          borderRadius: BorderRadius.circular(25.0),
+                        )),
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    controller: _lastNameController,
+                    decoration: InputDecoration(
+                        labelStyle: const TextStyle(
+                            color: primaryAppColor,
+                            fontWeight: FontWeight.w600),
+                        labelText: "Last Name",
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: primaryAppColor, width: 2.0),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: primaryAppColor, width: 2.0),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: accentAppColor, width: 2.0),
+                          borderRadius: BorderRadius.circular(25.0),
+                        )),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
             TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
               decoration: InputDecoration(
                   labelStyle: const TextStyle(
                       color: primaryAppColor, fontWeight: FontWeight.w600),
@@ -61,8 +133,9 @@ class SignUpScreen extends StatelessWidget {
               height: 16,
             ),
             TextFormField(
+                controller: _passwordController,
                 decoration: InputDecoration(
-                    labelText: "Password",
+                    labelText: "Set Password",
                     labelStyle: const TextStyle(
                         color: primaryAppColor, fontWeight: FontWeight.w600),
                     fillColor: Colors.white,
@@ -82,41 +155,55 @@ class SignUpScreen extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            const Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16),
-                ),
-              ),
-            ),
+            TextFormField(
+                controller: _confirmPasswordController,
+                decoration: InputDecoration(
+                    labelText: "Confirm Password",
+                    labelStyle: const TextStyle(
+                        color: primaryAppColor, fontWeight: FontWeight.w600),
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: primaryAppColor, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: primaryAppColor, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: accentAppColor, width: 2.0),
+                      borderRadius: BorderRadius.circular(25.0),
+                    ))),
             const SizedBox(
               height: 24,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: primaryAppColor,
-                      borderRadius: BorderRadius.circular(25.0)),
-                  width: double.infinity,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18),
+            InkWell(
+              onTap: () {
+                FirebaseUserRepo().signupUser(_emailController.text.trim(),
+                    _passwordController.text.trim());
+                Navigator.pushReplacementNamed(context, dashboardRoute);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: primaryAppColor,
+                        borderRadius: BorderRadius.circular(25.0)),
+                    width: double.infinity,
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          "Create Account",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                        ),
                       ),
-                    ),
-                  )),
+                    )),
+              ),
             ),
             const SizedBox(
               height: 16,
@@ -124,15 +211,20 @@ class SignUpScreen extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Dont have an account?"),
-                SizedBox(
+              children: [
+                const Text("Already have an account?"),
+                const SizedBox(
                   width: 4,
                 ),
-                Text(
-                  "Sign Up",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500, color: Colors.blue),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, signinRoute);
+                  },
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, color: Colors.blue),
+                  ),
                 ),
               ],
             ),

@@ -36,7 +36,7 @@ class OnboardingScreen extends StatelessWidget {
                 )
               ],
             ),
-            Image.asset('assets/logo.png'),
+            Hero(tag: "logo", child: Image.asset('assets/logo.png')),
             const Flexible(child: OnboardingPageView()),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: primaryAppColor),

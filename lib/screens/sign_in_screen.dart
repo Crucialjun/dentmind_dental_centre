@@ -17,10 +17,13 @@ class SignInScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Image.asset(
-                "assets/logo.png",
-                height: 200,
-                width: 200,
+              child: Hero(
+                tag: 'logo',
+                child: Image.asset(
+                  "assets/logo.png",
+                  height: 200,
+                  width: 200,
+                ),
               ),
             ),
             Text(
