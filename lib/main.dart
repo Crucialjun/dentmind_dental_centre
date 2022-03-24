@@ -1,5 +1,4 @@
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
-import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/screens/main_dashboard.dart';
 import 'package:dentmind_dental_centre/screens/onboarding_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_in_screen.dart';
@@ -20,6 +19,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
 
