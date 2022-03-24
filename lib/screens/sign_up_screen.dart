@@ -23,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordValid = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -150,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: ((value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter an Email Address";
-                    } else if (!EmailValidator.validate(value)) {
+                    } else if (!EmailValidator.validate(value.trim())) {
                       return "Please enter a valid Email Address";
                     }
                     return null;
@@ -259,12 +260,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 24,
                 ),
                 InkWell(
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      FirebaseUserRepo().signupUser(
+                  onTap: () async {
+                    if (_formKey.currentState!.validate() & _isPasswordValid) {
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      bool _userCreated = await FirebaseUserRepo().signupUser(
                           _emailController.text.trim(),
                           _passwordController.text.trim());
-                      Navigator.pushReplacementNamed(context, dashboardRoute);
+                      setState(() {
+                        _isLoading = false;
+                      });
+                      if (_userCreated) {
+                        Navigator.pushReplacementNamed(context, dashboardRoute);
+                      }
                     }
                   },
                   child: Padding(
@@ -274,16 +283,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: primaryAppColor,
                             borderRadius: BorderRadius.circular(25.0)),
                         width: double.infinity,
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Center(
-                            child: Text(
-                              "Create Account",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18),
-                            ),
+                            child: _isLoading
+                                ? const CircularProgressIndicator()
+                                : const Text(
+                                    "Create Account",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18),
+                                  ),
                           ),
                         )),
                   ),
