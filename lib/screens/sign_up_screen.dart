@@ -266,6 +266,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         _isLoading = true;
                       });
                       bool _userCreated = await FirebaseUserRepo().signupUser(
+                          context,
                           _emailController.text.trim(),
                           _passwordController.text.trim());
                       setState(() {

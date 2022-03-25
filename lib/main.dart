@@ -1,11 +1,11 @@
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
-import 'package:dentmind_dental_centre/screens/main_dashboard.dart';
 import 'package:dentmind_dental_centre/screens/onboarding_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_in_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_up_screen.dart';
 import 'package:dentmind_dental_centre/screens/splash_screen.dart';
 import 'package:dentmind_dental_centre/utils/auth_checker.dart';
 import 'package:dentmind_dental_centre/utils/custom_scroll.dart';
+import 'package:dentmind_dental_centre/utils/main_pageview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           routes: {
             splashRoute: (context) => const SplashScreen(),
             onboardingRoute: (context) => const OnboardingScreen(),
-            dashboardRoute: (context) => const MainDashboard(),
+            dashboardRoute: (context) => const MainPageView(),
             signinRoute: (context) => const SignInScreen(),
             signupRoute: (context) => const SignUpScreen(),
             authCheckerRoute: (context) => const AuthChecker(),
