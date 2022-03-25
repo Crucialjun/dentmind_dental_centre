@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,36 @@ class MainDashboard extends StatefulWidget {
 }
 
 class _MainDashboardState extends State<MainDashboard> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: BottomNavyBar(
+            selectedIndex: _selectedIndex,
+            onItemSelected: (value) {
+              setState(() {
+                _selectedIndex = value;
+              });
+            },
+            items: [
+              BottomNavyBarItem(
+                icon: Icon(Icons.apps),
+                title: Text('Home'),
+                activeColor: Colors.red,
+              ),
+              BottomNavyBarItem(
+                  icon: Icon(Icons.notes),
+                  title: Text('Appointments'),
+                  activeColor: Colors.purpleAccent),
+              BottomNavyBarItem(
+                  icon: Icon(Icons.help),
+                  title: Text('Help'),
+                  activeColor: Colors.pink),
+              BottomNavyBarItem(
+                  icon: Icon(Icons.settings),
+                  title: Text('Settings'),
+                  activeColor: Colors.blue),
+            ]),
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         body: SafeArea(
           child: Padding(

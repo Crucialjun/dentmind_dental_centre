@@ -16,7 +16,7 @@ class CategoryContainer extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(16)),
-        width: 150,
+        width: 170,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
@@ -32,6 +32,7 @@ class CategoryContainer extends StatelessWidget {
                 child: Text(
                   serviceName,
                   style: const TextStyle(
+                    fontWeight: FontWeight.w500,
                     color: primaryAppColor,
                   ),
                 ),
