@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Client {
   String firstName;
   String lastName;
@@ -32,6 +34,18 @@ class Client {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       uid: map['uid'] ?? '',
+    );
+  }
+
+  factory Client.fromDocumentSnapshot(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
+
+    return Client(
+      firstName: snapshot['firstName'] ?? '',
+      lastName: snapshot['lastName'] ?? '',
+      email: snapshot['email'] ?? '',
+      phoneNumber: snapshot['phoneNumber'] ?? '',
+      uid: snapshot['uid'] ?? '',
     );
   }
 
