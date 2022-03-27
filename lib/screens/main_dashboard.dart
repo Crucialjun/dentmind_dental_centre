@@ -1,8 +1,9 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class MainDashboard extends StatefulWidget {
 class _MainDashboardState extends State<MainDashboard> {
   @override
   Widget build(BuildContext context) {
+    final _firebaseUser = context.watch<User?>();
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         body: SafeArea(
@@ -29,8 +31,10 @@ class _MainDashboardState extends State<MainDashboard> {
                 const SizedBox(
                   height: 8,
                 ),
-                const Text(
-                  "Hello Nicholas",
+                Text(
+                  _firebaseUser == null
+                      ? "Hello User"
+                      : "Hello ${_firebaseUser.displayName}",
                   style: TextStyle(color: primaryAppColor),
                 ),
                 const SizedBox(
