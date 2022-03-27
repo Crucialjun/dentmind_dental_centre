@@ -34,6 +34,28 @@ class FirebaseUserRepo extends ChangeNotifier {
     }
   }
 
+  Future<bool> loginUser(
+    BuildContext context,
+    String email,
+    String password,
+  ) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showErrorDialog(context, "No user with that email, please sign up");
+        return false;
+      } else if (e.code == 'wrong-password') {
+        showErrorDialog(context, 'Wrong credentials provided please try again');
+        return false;
+      }
+      showErrorDialog(context, e.message.toString());
+      return false;
+    }
+  }
+
   Future logoutUser() async {
     await _firebaseAuth.signOut();
   }

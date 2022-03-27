@@ -1,11 +1,28 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
+import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +59,7 @@ class SignInScreen extends StatelessWidget {
               height: 24,
             ),
             TextFormField(
+              controller: _emailController,
               decoration: InputDecoration(
                   labelStyle: const TextStyle(
                       color: primaryAppColor, fontWeight: FontWeight.w600),
@@ -65,6 +83,7 @@ class SignInScreen extends StatelessWidget {
               height: 16,
             ),
             TextFormField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                     labelText: "Password",
                     labelStyle: const TextStyle(
@@ -104,23 +123,41 @@ class SignInScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: primaryAppColor,
-                      borderRadius: BorderRadius.circular(25.0)),
-                  width: double.infinity,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18),
+              child: InkWell(
+                onTap: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  bool isLoggedIn = await FirebaseUserRepo().loginUser(context,
+                      _emailController.text.trim(), _passwordController.text);
+                  setState(() {
+                    isLoading = false;
+                  });
+
+                  if (isLoggedIn) {
+                    Navigator.pushReplacementNamed(context, dashboardRoute);
+                  }
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: primaryAppColor,
+                        borderRadius: BorderRadius.circular(25.0)),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: isLoading
+                            ? const CircularProgressIndicator()
+                            : const Text(
+                                "Log In",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                              ),
                       ),
-                    ),
-                  )),
+                    )),
+              ),
             ),
             const SizedBox(
               height: 16,

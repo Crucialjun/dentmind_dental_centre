@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         StreamProvider(
           create: (context) => context.read<FirebaseUserRepo>().authState,
           initialData: null,
-        )
+        ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

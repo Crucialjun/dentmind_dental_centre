@@ -1,9 +1,13 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
+import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import "string_extensions.dart";
+
+import '../firebase/firebase_storage_methods.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({Key? key}) : super(key: key);
@@ -16,8 +20,10 @@ class _MainDashboardState extends State<MainDashboard> {
   @override
   Widget build(BuildContext context) {
     final _firebaseUser = context.watch<User?>();
+    Future<Client?> _client = getClient(_firebaseUser);
+
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 230, 230, 230),
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
@@ -31,25 +37,43 @@ class _MainDashboardState extends State<MainDashboard> {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
-                  _firebaseUser == null
-                      ? "Hello User"
-                      : "Hello ${_firebaseUser.displayName}",
-                  style: TextStyle(color: primaryAppColor),
-                ),
+                FutureBuilder(
+                    future: _client,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Text("Hello User",
+                            style: TextStyle(
+                                color: primaryAppColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500));
+                      } else if (snapshot.hasError) {
+                        return const Text("Hello user",
+                            style: TextStyle(
+                                color: primaryAppColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500));
+                      } else {
+                        return Text(
+                            "Hello ${(((snapshot.data) as Client).firstName).capitalizeFirstLetter()} ${(((snapshot.data) as Client).lastName).capitalizeFirstLetter()}",
+                            style: const TextStyle(
+                                color: primaryAppColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500));
+                      }
+                    }),
                 const SizedBox(
-                  height: 16,
+                  height: 4,
                 ),
                 const Text(
                   "Find Your Dentist",
                   style: TextStyle(
                       color: primaryAppColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 42),
+                      fontSize: 36),
                 ),
                 const Text(
                   "Book an appointment for consultation",
-                  style: TextStyle(color: primaryAppColor, fontSize: 24),
+                  style: TextStyle(color: primaryAppColor, fontSize: 18),
                 ),
                 const SizedBox(
                   height: 16,
@@ -57,6 +81,14 @@ class _MainDashboardState extends State<MainDashboard> {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: primaryAppColor.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        )
+                      ],
                       color: Colors.white),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -192,8 +224,19 @@ class _MainDashboardState extends State<MainDashboard> {
 
   Container appointmentCard() {
     return Container(
+      margin: const EdgeInsets.only(top: 4, left: 4, right: 4, bottom: 4),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16), color: Colors.white),
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: primaryAppColor.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 4,
+            offset: Offset(0, 3),
+          )
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
@@ -257,5 +300,10 @@ class _MainDashboardState extends State<MainDashboard> {
         ]),
       ),
     );
+  }
+
+  Future<Client?> getClient(User? firebaseUser) async {
+    var client = await FirebaseStorageMethods().getClient(firebaseUser!.uid);
+    return client;
   }
 }
