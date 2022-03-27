@@ -8,6 +8,7 @@ class Client {
   String email;
   String phoneNumber;
   String uid;
+  String? profileImageUrl;
 
   Client({
     required this.firstName,
@@ -15,6 +16,7 @@ class Client {
     required this.email,
     required this.phoneNumber,
     required this.uid,
+    profileImageUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,6 +26,7 @@ class Client {
       'email': email,
       'phoneNumber': phoneNumber,
       'uid': uid,
+      'profileImageUrl': profileImageUrl
     };
   }
 
@@ -34,6 +37,7 @@ class Client {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       uid: map['uid'] ?? '',
+      profileImageUrl: map['profileImageUrl'] ?? '',
     );
   }
 
@@ -46,6 +50,7 @@ class Client {
       email: snapshot['email'] ?? '',
       phoneNumber: snapshot['phoneNumber'] ?? '',
       uid: snapshot['uid'] ?? '',
+      profileImageUrl: snapshot['profileImageUrl'] ?? '',
     );
   }
 
