@@ -1,4 +1,3 @@
-import 'package:dentmind_dental_centre/screens/main_dashboard.dart';
 import 'package:dentmind_dental_centre/screens/sign_in_screen.dart';
 import 'package:dentmind_dental_centre/utils/main_pageview.dart';
 import 'package:firebase_auth/firebase_auth.dart';

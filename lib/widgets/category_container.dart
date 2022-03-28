@@ -7,9 +7,11 @@ class CategoryContainer extends StatelessWidget {
   const CategoryContainer({
     Key? key,
     required this.serviceName,
+    required this.id,
   }) : super(key: key);
 
   final String serviceName;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CategoryContainer extends StatelessWidget {
               color: primaryAppColor.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 4,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             )
           ],
         ),
@@ -34,7 +36,7 @@ class CategoryContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(child: SvgPicture.asset('assets/service_one.svg')),
+              Expanded(child: SvgPicture.asset('assets/service$id.svg')),
               const SizedBox(
                 height: 4,
               ),
@@ -43,7 +45,7 @@ class CategoryContainer extends StatelessWidget {
                 child: Text(
                   serviceName,
                   style: const TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w800,
                     color: primaryAppColor,
                   ),
                 ),

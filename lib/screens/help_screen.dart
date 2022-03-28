@@ -10,8 +10,6 @@ class HelpScreen extends StatefulWidget {
 class _HelpScreenState extends State<HelpScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("help")),
-    );
+    return const Center(child: Text("help"));
   }
 }

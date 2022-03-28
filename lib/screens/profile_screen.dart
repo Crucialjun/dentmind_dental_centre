@@ -258,7 +258,7 @@ class ProfileScreen extends StatelessWidget {
                   ]),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               ElevatedButton(
@@ -266,7 +266,7 @@ class ProfileScreen extends StatelessWidget {
                   await FirebaseUserRepo().logoutUser();
                   Navigator.pushReplacementNamed(context, signinRoute);
                 },
-                child: Text("Logout"),
+                child: const Text("Logout"),
               ),
             ],
           ),

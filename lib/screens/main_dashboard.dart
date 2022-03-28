@@ -86,7 +86,7 @@ class _MainDashboardState extends State<MainDashboard> {
                           color: primaryAppColor.withOpacity(0.5),
                           spreadRadius: 3,
                           blurRadius: 4,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         )
                       ],
                       color: Colors.white),
@@ -152,48 +152,56 @@ class _MainDashboardState extends State<MainDashboard> {
                     children: const [
                       CategoryContainer(
                         serviceName: 'General Dentistry',
+                        id: "1",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Restorative Dentistry',
+                        id: "2",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Periontology Dentistry',
+                        id: "3",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Dental Surgery',
+                        id: "4",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Pediatric Dentistry',
+                        id: "5",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Cosmetic Dentistry',
+                        id: "6",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Prosthetic Dentistry',
+                        id: "7",
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       CategoryContainer(
                         serviceName: 'Dental X-Rays',
+                        id: "8",
                       ),
                     ],
                   ),
@@ -204,15 +212,30 @@ class _MainDashboardState extends State<MainDashboard> {
                 Expanded(
                   child: ListView(
                     children: [
-                      appointmentCard(),
+                      appointmentCard(
+                          "Dental Surgeon",
+                          "Nabea",
+                          "Bachelor of Dental Surgery (BDS)",
+                          "nabea",
+                          "Kitengela"),
                       const SizedBox(
                         height: 16,
                       ),
-                      appointmentCard(),
+                      appointmentCard(
+                          "Dental Surgeon",
+                          "Muturi",
+                          "Bachelor of Dental Surgery (BDS)",
+                          "muturi",
+                          "Mombasa Road"),
                       const SizedBox(
                         height: 16,
                       ),
-                      appointmentCard(),
+                      appointmentCard(
+                          "Dental Surgeon",
+                          "Nabea",
+                          "Bachelor of Dental Surgery (BDS)",
+                          "nabea",
+                          "Buruburu"),
                     ],
                   ),
                 ),
@@ -222,7 +245,8 @@ class _MainDashboardState extends State<MainDashboard> {
         ));
   }
 
-  Container appointmentCard() {
+  Container appointmentCard(String speciality, String name,
+      String qualification, String image, String location) {
     return Container(
       margin: const EdgeInsets.only(top: 4, left: 4, right: 4, bottom: 4),
       decoration: BoxDecoration(
@@ -233,7 +257,7 @@ class _MainDashboardState extends State<MainDashboard> {
             color: primaryAppColor.withOpacity(0.5),
             spreadRadius: 3,
             blurRadius: 4,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           )
         ],
       ),
@@ -245,17 +269,28 @@ class _MainDashboardState extends State<MainDashboard> {
               CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 50,
-                child: Image.asset(
-                  "assets/medicine_bro.png",
-                  scale: 0.2,
-                ),
+                backgroundImage: AssetImage("assets/$image.jpg"),
+              ),
+              const SizedBox(
+                width: 8,
               ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Doctor Firstname Lastname"),
-                    const Text("Doctors ranking and achievement"),
+                    Text(
+                      "$speciality - Doctor $name",
+                      style: const TextStyle(
+                          color: primaryAppColor, fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      qualification,
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
                     RatingBar.builder(
                         initialRating: 5,
                         itemSize: 24.0,
@@ -264,7 +299,13 @@ class _MainDashboardState extends State<MainDashboard> {
                               color: accentAppColor,
                             ),
                         onRatingUpdate: (rating) {}),
-                    const Text("Dentmind Dental Care Kitengela"),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text("Dentmind Dental Care $location",
+                        style: const TextStyle(
+                            color: primaryAppColor,
+                            fontWeight: FontWeight.w700)),
                   ],
                 ),
               ),
@@ -286,13 +327,22 @@ class _MainDashboardState extends State<MainDashboard> {
           ),
           Row(
             children: [
-              const Icon(Icons.timer),
-              const SizedBox(
-                width: 4,
+              const CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage("assets/chronometer.png"),
               ),
-              const Expanded(child: Text("Open timings : 9:00am - 5:00pm")),
+              const SizedBox(
+                width: 16,
+              ),
+              const Expanded(
+                  child: Text(
+                "Open timings : 9:00am - 5:00pm",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+              )),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: primaryAppColor),
+                  style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 24, 153, 93)),
                   onPressed: () {},
                   child: const Text("Book Now"))
             ],
