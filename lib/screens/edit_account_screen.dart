@@ -10,309 +10,251 @@ import '../firebase/firebase_storage_methods.dart';
 import '../global_constants.dart';
 import '../models/client_model.dart';
 
-class EditAccountScreen extends StatelessWidget {
+class EditAccountScreen extends StatefulWidget {
   const EditAccountScreen({Key? key}) : super(key: key);
+
+  @override
+  State<EditAccountScreen> createState() => _EditAccountScreenState();
+}
+
+class _EditAccountScreenState extends State<EditAccountScreen> {
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    _firstnameController.dispose();
+    _lastnameController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final _firebaseUser = context.watch<User?>();
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 250, 250, 250),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(
-                "Edit Account Details",
-                style: TextStyle(
-                    fontFamily: GoogleFonts.chivo().fontFamily,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 36,
-                    color: primaryAppColor),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Stack(
-                children: const [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage("assets/man.png"),
+          child: Column(children: [
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Edit Profile",
+              style: TextStyle(
+                  fontFamily: GoogleFonts.chivo().fontFamily,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 36,
+                  color: primaryAppColor),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            Stack(
+              children: const [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.white,
+                  backgroundImage: AssetImage("assets/man.png"),
+                ),
+                Positioned(
+                  bottom: 0.0,
+                  right: 0.0,
+                  child: CircleAvatar(
+                    radius: 18,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: AssetImage("assets/plus.png"),
                   ),
-                  Positioned(
-                    bottom: 0.0,
-                    right: 0.0,
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage("assets/addphoto.png"),
-                    ),
-                  )
-                ],
-              ),
-              FutureBuilder(
-                  future:
-                      FirebaseStorageMethods().getClient(_firebaseUser!.uid),
-                  builder: (context, AsyncSnapshot<Client?> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasData) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
+                )
+              ],
+            ),
+            FutureBuilder(
+                future: FirebaseStorageMethods().getClient(_firebaseUser!.uid),
+                builder: (context, AsyncSnapshot<Client?> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasData) {
+                    _firstnameController.text = snapshot.data?.firstName ?? "";
+                    _lastnameController.text = snapshot.data?.lastName ?? "";
+                    _phoneNumberController.text =
+                        snapshot.data?.phoneNumber ?? "";
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "First Name: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                                Text(
-                                  snapshot.data!.firstName,
-                                  style: const TextStyle(fontSize: 18),
-                                ),
-                              ],
+                            const Padding(
+                              padding: EdgeInsets.only(left: 16, bottom: 4),
+                              child: Text(
+                                "First Name",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
                             ),
-                          ],
-                        ),
-                      );
-                    }
-                    return Container();
-                  }),
-              Text("${_firebaseUser.email}"),
-              const SizedBox(
-                height: 4,
-              ),
-              InkWell(
-                  onTap: () {},
-                  child: const Text(
-                    "Edit",
-                    style: TextStyle(
-                        color: Colors.green, fontWeight: FontWeight.w500),
-                  )),
-              Container(
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryAppColor.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: const [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/man.png"),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter your First Name";
+                                } else if (!RegExp('[a-zA-Z]')
+                                    .hasMatch(value)) {
+                                  return "Please enter a valid First Name";
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.name,
+                              controller: _firstnameController,
+                              decoration: InputDecoration(
+                                  labelStyle: const TextStyle(
+                                      color: primaryAppColor,
+                                      fontWeight: FontWeight.w600),
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: primaryAppColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(8.0)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: primaryAppColor, width: 2.0),
+                                      borderRadius:
+                                          BorderRadius.circular(25.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: accentAppColor, width: 2.0),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  )),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 16, bottom: 4),
+                              child: Text(
+                                "Last Name",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                            ),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter your Last Name";
+                                } else if (!RegExp('[a-zA-Z]')
+                                    .hasMatch(value)) {
+                                  return "Please enter a valid Last Name";
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.name,
+                              controller: _lastnameController,
+                              decoration: InputDecoration(
+                                  labelStyle: const TextStyle(
+                                      color: primaryAppColor,
+                                      fontWeight: FontWeight.w600),
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: primaryAppColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(8.0)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: primaryAppColor, width: 2.0),
+                                      borderRadius:
+                                          BorderRadius.circular(25.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: accentAppColor, width: 2.0),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  )),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 16, bottom: 4),
+                              child: Text(
+                                "Phone Number",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                            ),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter your Last Name";
+                                } else if (!RegExp('[a-zA-Z]')
+                                    .hasMatch(value)) {
+                                  return "Please enter a valid Last Name";
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.number,
+                              controller: _phoneNumberController,
+                              decoration: InputDecoration(
+                                  labelStyle: const TextStyle(
+                                      color: primaryAppColor,
+                                      fontWeight: FontWeight.w600),
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: primaryAppColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(8.0)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: primaryAppColor, width: 2.0),
+                                      borderRadius:
+                                          BorderRadius.circular(25.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: accentAppColor, width: 2.0),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  )),
+                            ),
+                          ]),
+                    );
+                  }
+                  return Container();
+                }),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24)),
                     ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Text(
-                      "Account",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: 4,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                    ),
-                    Icon(Icons.arrow_right_outlined)
-                  ]),
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Container(
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryAppColor.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: const [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/appointment.png"),
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Text(
-                      "My Appointments",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: 4,
-                      ),
-                    ),
-                    Icon(Icons.arrow_right_outlined)
-                  ]),
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Container(
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryAppColor.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: const [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/dental.png"),
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Text(
-                      "My Dental Information",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: 4,
-                      ),
-                    ),
-                    Icon(Icons.arrow_right_outlined)
-                  ]),
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Container(
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryAppColor.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: const [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/favorite.png"),
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Text(
-                      "Favorite Services",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: 4,
-                      ),
-                    ),
-                    Icon(Icons.arrow_right_outlined)
-                  ]),
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Container(
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryAppColor.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      )
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: const [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/setting.png"),
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Text(
-                      "Settings",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: 4,
-                      ),
-                    ),
-                    Icon(Icons.arrow_right_outlined)
-                  ]),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await FirebaseUserRepo().logoutUser();
-                  Navigator.pushReplacementNamed(context, signinRoute);
-                },
-                child: const Text("Logout"),
-              ),
-            ],
-          ),
+                    )),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        primary: primaryAppColor),
+                    onPressed: () {},
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text("Save",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18)),
+                    )),
+              ],
+            )
+          ]),
         ),
       ),
     );
