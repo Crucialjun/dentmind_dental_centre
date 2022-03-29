@@ -1,17 +1,17 @@
-import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
-import 'package:dentmind_dental_centre/firebase/firebase_storage_methods.dart';
-import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/screens/string_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../app_colors.dart';
+import '../firebase/firebase_auth.dart';
+import '../firebase/firebase_storage_methods.dart';
+import '../global_constants.dart';
 import '../models/client_model.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class EditAccountScreen extends StatelessWidget {
+  const EditAccountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +22,63 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage("assets/man.png"),
+              Text(
+                "Edit Account Details",
+                style: TextStyle(
+                    fontFamily: GoogleFonts.chivo().fontFamily,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    color: primaryAppColor),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Stack(
+                children: const [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage("assets/man.png"),
+                  ),
+                  Positioned(
+                    bottom: 0.0,
+                    right: 0.0,
+                    child: CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage("assets/addphoto.png"),
+                    ),
+                  )
+                ],
               ),
               FutureBuilder(
                   future:
                       FirebaseStorageMethods().getClient(_firebaseUser!.uid),
-                  builder: (context, snapshot) {
+                  builder: (context, AsyncSnapshot<Client?> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasData) {
-                      return Text(
-                        "${(((snapshot.data) as Client).firstName).capitalizeFirstLetter()} ${(((snapshot.data) as Client).lastName).capitalizeFirstLetter()}",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 18),
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "First Name: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                                Text(
+                                  snapshot.data!.firstName,
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     }
                     return Container();
@@ -49,18 +88,11 @@ class ProfileScreen extends StatelessWidget {
                 height: 4,
               ),
               InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, accountEditRoute);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Edit",
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
-                    ),
+                  onTap: () {},
+                  child: const Text(
+                    "Edit",
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.w500),
                   )),
               Container(
                 margin: const EdgeInsets.all(16),

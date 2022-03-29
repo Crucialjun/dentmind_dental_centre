@@ -1,4 +1,5 @@
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
+import 'package:dentmind_dental_centre/screens/edit_account_screen.dart';
 import 'package:dentmind_dental_centre/screens/onboarding_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_in_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_up_screen.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
             signinRoute: (context) => const SignInScreen(),
             signupRoute: (context) => const SignUpScreen(),
             authCheckerRoute: (context) => const AuthChecker(),
+            accountEditRoute: (context) => const EditAccountScreen(),
           }),
     );
   }
