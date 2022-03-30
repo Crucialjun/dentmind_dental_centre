@@ -4,10 +4,12 @@ class DentmindServices {
   String serviceName;
   String serviceDescription;
   String imageName;
+  String label;
   DentmindServices({
     required this.serviceName,
     required this.serviceDescription,
     required this.imageName,
+    required this.label,
   });
 
   DentmindServices copyWith({
@@ -19,6 +21,7 @@ class DentmindServices {
       serviceName: serviceName ?? this.serviceName,
       serviceDescription: serviceDescription ?? this.serviceDescription,
       imageName: imageName ?? this.imageName,
+      label: serviceName ?? this.serviceName,
     );
   }
 
@@ -27,6 +30,7 @@ class DentmindServices {
       'serviceName': serviceName,
       'serviceDescription': serviceDescription,
       'imageName': imageName,
+      'label': serviceName,
     };
   }
 
@@ -35,6 +39,7 @@ class DentmindServices {
       serviceName: map['serviceName'] ?? '',
       serviceDescription: map['serviceDescription'] ?? '',
       imageName: map['imageName'] ?? '',
+      label: map['serviceName'] ?? '',
     );
   }
 
@@ -45,6 +50,7 @@ class DentmindServices {
       serviceName: map['serviceName'] ?? '',
       serviceDescription: map['serviceDescription'] ?? '',
       imageName: map['imageName'] ?? '',
+      label: map['serviceName'] ?? '',
     );
   }
 

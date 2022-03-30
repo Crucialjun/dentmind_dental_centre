@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/models/services_model.dart';
+import 'package:dentmind_dental_centre/screens/services_details.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -121,9 +122,14 @@ class _MainDashboardState extends State<MainDashboard> {
                       ),
                       Expanded(
                           child: TextFieldSearch(
-                        minStringLength: 3,
+                        minStringLength: 1,
                         getSelectedValue: (value) {
-                          print(value);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      ServicesDetailsPage(service: value))));
+                          _searchController.clear();
                         },
                         future: loadServices,
                         label: "serviceName",
@@ -359,8 +365,6 @@ class _MainDashboardState extends State<MainDashboard> {
       var services = DentmindServices.fromJson(decode[i]);
       servicesList.add(services);
     }
-
-    print(servicesList);
     return servicesList;
   }
 }
