@@ -21,20 +21,19 @@ class MainDashboard extends StatefulWidget {
 }
 
 class _MainDashboardState extends State<MainDashboard> {
-  List<DentmindServices> servicesList = [];
-  List<DentmindServices> searchList = [];
+  List servicesList = [];
+  List searchList = [];
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadServices();
   }
 
   @override
@@ -122,11 +121,13 @@ class _MainDashboardState extends State<MainDashboard> {
                       ),
                       Expanded(
                           child: TextFieldSearch(
-                        label: "Search Services",
-                        initialList: servicesList,
-                        future: () {
-                          return loadServices();
+                        minStringLength: 3,
+                        getSelectedValue: (value) {
+                          print(value);
                         },
+                        future: loadServices,
+                        label: "serviceName",
+                        initialList: servicesList,
                         controller: _searchController,
                         decoration: const InputDecoration(
                             hintStyle:
@@ -346,74 +347,20 @@ class _MainDashboardState extends State<MainDashboard> {
     return client;
   }
 
-  void searchService(String value) {
-    showSearch(context: context, delegate: MySearchDelegate(servicesList));
-    if (value.isNotEmpty) {
-      List dummyListData = [];
-      for (var element in servicesList) {
-        if (element.serviceName.contains(value)) {
-          dummyListData.add(element);
-        }
-      }
-      setState(() {
-        searchList.clear();
-        for (var element in dummyListData) {
-          searchList.add(element);
-        }
-      });
-      return;
-    } else {}
-  }
+  Future<List> loadServices() async {
+    var list =
+        await DefaultAssetBundle.of(context).loadString("data/services.json");
 
-  Future<List<DentmindServices>> loadServices() async {
-    List<DentmindServices> services = await jsonDecode(
-        DefaultAssetBundle.of(context)
-            .loadString("data/services.json")
-            .toString());
-    return services;
-  }
-}
+    List decode = jsonDecode(list);
 
-class MySearchDelegate extends SearchDelegate {
-  final List<DentmindServices> servicesList;
+    var servicesList = [];
 
-  MySearchDelegate(this.servicesList);
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-          onPressed: () {
-            query = "";
-          },
-          icon: const Icon(Icons.cancel))
-    ];
-  }
+    for (var i = 0; i < decode.length; i++) {
+      var services = DentmindServices.fromJson(decode[i]);
+      servicesList.add(services);
+    }
 
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {},
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    var mylist = servicesList;
-
-    return ListView.builder(itemBuilder: ((context, index) {
-      return (ListTile(
-        title: Text(mylist[index].serviceName),
-      ));
-    }));
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return ListView.builder(itemBuilder: ((context, index) {
-      return const ListTile(
-        title: Text(""),
-      );
-    }));
+    print(servicesList);
+    return servicesList;
   }
 }

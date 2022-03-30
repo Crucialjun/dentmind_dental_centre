@@ -40,8 +40,13 @@ class DentmindServices {
 
   String toJson() => json.encode(toMap());
 
-  factory DentmindServices.fromJson(String source) =>
-      DentmindServices.fromMap(json.decode(source));
+  factory DentmindServices.fromJson(Map<String, dynamic> map) {
+    return DentmindServices(
+      serviceName: map['serviceName'] ?? '',
+      serviceDescription: map['serviceDescription'] ?? '',
+      imageName: map['imageName'] ?? '',
+    );
+  }
 
   @override
   String toString() =>
