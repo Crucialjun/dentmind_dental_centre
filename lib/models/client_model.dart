@@ -16,7 +16,7 @@ class Client {
     required this.email,
     required this.phoneNumber,
     required this.uid,
-    profileImageUrl,
+    this.profileImageUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,7 +26,7 @@ class Client {
       'email': email,
       'phoneNumber': phoneNumber,
       'uid': uid,
-      'profileImageUrl': profileImageUrl
+      'profileImageUrl': profileImageUrl,
     };
   }
 
@@ -37,7 +37,7 @@ class Client {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       uid: map['uid'] ?? '',
-      profileImageUrl: map['profileImageUrl'] ?? '',
+      profileImageUrl: map['profileImageUrl'],
     );
   }
 
@@ -57,4 +57,50 @@ class Client {
   String toJson() => json.encode(toMap());
 
   factory Client.fromJson(String source) => Client.fromMap(json.decode(source));
+
+  Client copyWith({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phoneNumber,
+    String? uid,
+    String? profileImageUrl,
+  }) {
+    return Client(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      uid: uid ?? this.uid,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Client(firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber, uid: $uid, profileImageUrl: $profileImageUrl)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Client &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.uid == uid &&
+        other.profileImageUrl == profileImageUrl;
+  }
+
+  @override
+  int get hashCode {
+    return firstName.hashCode ^
+        lastName.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        uid.hashCode ^
+        profileImageUrl.hashCode;
+  }
 }

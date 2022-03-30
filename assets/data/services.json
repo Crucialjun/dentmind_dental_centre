@@ -1,0 +1,42 @@
+[
+  {
+    "serviceName": "General Dentistry",
+    "serviceDescription": "General dentistry refers to a broad spectrum of oral health concerns. General dentists, also commonly referred to as family dentists or simply dentists, are experts at preventing, recognizing, diagnosing, and treating a variety of oral health problems ranging from disease to injury and everything in between. While dental specialists focus on a single area, general dentists can provide comprehensive dental care to remedy multiple issues and maintain oral health.\n Although most people associate general dentistry with restorative treatments such as fillings or root canals, the vast majority of general dental care is actually preventative in nature. Preventative dental treatments performed by a general dentist include: dental consultations, teeth cleaning, the application of dental sealants and fluoride treatments, and dental x-rays. In addition to preventative and restorative services, general dentists can also perform cosmetic dental treatments.",
+    "imageName": "service1"
+  },
+  {
+    "serviceName": "Restorative Dentistry",
+    "serviceDescription": "Restorative dentistry is a branch of dentistry that focuses on replacing damaged or missing teeth./n More specifically, these dentists primarily remove and repair cavities and provide treatment for other oral conditions. They also specialize in treating patients who need dental repairs due to trauma or injuries./n This branch of dentistry also incorporates treatments from other dental fields, including endodontics, prosthodontics, and periodontics. This is because many patients require multifaceted care, which means they may require treatment from more than one specialist.",
+    "imageName": "service2"
+  },
+  {
+    "serviceName": "Periontology Dentistry",
+    "serviceDescription": "This is the specialty that diagnoses and treats conditions affecting the gums and the periodontal tissues.  Periodontal tissues are those structures that help support the tooth – including bone.  Some periodontists (the specialists in this area) will also place dental implants. /n Periodontal disease is a condition that affects the supporting tissue of the mouth. There are two main stages of gum disease: gingivitis (the less severe condition, only affecting the gums) and periodontitis (where all the supporting structures are involved). Although there are numerous signs and symptoms associated with periodontal disease, you may not realise you have the disease. Your dentist will check for signs of periodontal disease during your checkup. /n The symptoms are gums that tend to bleed easily, especially when brushing, gums that are sensitive and turn red, detachment of the gums from the teeth creating spaces that are known as periodontal pockets, constant bad breath or bad taste in the mouth and loose teeth.  Periodontal disease can lead to permanent teeth loss, a change in the bite, or a change in the fit of partial dentures. Many older adults will loose more teeth as a result of periodontal disease than dental decay (caries).",
+    "imageName": "service3"
+  },
+  {
+    "serviceName": "Dental Surgery",
+    "serviceDescription": "Dental surgery is a broad term that refers to a broad range of medical procedures that involves the gums and teeth. These include root canal, implants, and wisdom tooth extraction. Out of the different dental surgery procedures, perhaps the most common is wisdom teeth removal. ",
+    "imageName": "service4"
+  },
+  {
+    "serviceName": "Pediatric Dentistry",
+    "serviceDescription": "Pediatric dentistry is a branch of dentistry that deals with the examination and management of dental health in children. \n Dental procedures are generally perceived as intimidating and painful experiences that most would like to avoid, especially among children. However, it is vital that children have their milk teeth checked regularly by pediatric dentists for evidence of caries and tooth decay.",
+    "imageName": "service5"
+  },
+  {
+    "serviceName": "Cosmetic Dentistry",
+    "serviceDescription": "Cosmetic dentistry is a method of professional oral care that focuses on improving the appearance of your teeth. And although cosmetic dentistry procedures are usually elective rather than essential, some treatment cases also provide restorative benefits.",
+    "imageName": "service6"
+  },
+  {
+    "serviceName": "Prosthetic Dentistry",
+    "serviceDescription": "A dental prosthesis is a dental appliance that replaces a missing tooth or covers up tooth defects. These dental appliances include implants, crowns, bridges, dentures and veneers, and some of them can be removable or permanently fixed in your mouth. If you think you might benefit from a prosthesis, your dentist or prosthodontist can explain the most effective option for your dental needs.",
+    "imageName": "service7"
+  },
+  {
+    "serviceName": "Dental X-Rays",
+    "serviceDescription": "Dental X-rays (radiographs) are images of your teeth that your dentist uses to evaluate your oral health. These X-rays are used with low levels of radiation to capture images of the interior of your teeth and gums. This can help your dentist to identify problems, like cavities, tooth decay, and impacted teeth.\n Dental X-rays may seem complex, but they’re actually very common tools that are just as important as your teeth cleanings.",
+    "imageName": "service8"
+  }
+]

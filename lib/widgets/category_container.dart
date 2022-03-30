@@ -36,7 +36,7 @@ class CategoryContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(child: SvgPicture.asset('assets/service$id.svg')),
+              Expanded(child: SvgPicture.asset('assets/$id.svg')),
               const SizedBox(
                 height: 4,
               ),
