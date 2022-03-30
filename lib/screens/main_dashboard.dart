@@ -196,10 +196,22 @@ class _MainDashboardState extends State<MainDashboard> {
                               scrollDirection: Axis.horizontal,
                               itemCount: servicesdata.length,
                               itemBuilder: ((context, index) {
-                                return CategoryContainer(
-                                    serviceName: servicesdata[index]
-                                        ["serviceName"],
-                                    id: servicesdata[index]["imageName"]);
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                ServicesDetailsPage(
+                                                    service: DentmindServices
+                                                        .fromJson(servicesdata[
+                                                            index])))));
+                                  },
+                                  child: CategoryContainer(
+                                      serviceName: servicesdata[index]
+                                          ["serviceName"],
+                                      id: servicesdata[index]["imageName"]),
+                                );
                               }));
                         })),
                 const SizedBox(
