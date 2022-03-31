@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/models/services_model.dart';
+import 'package:dentmind_dental_centre/screens/all_services_list.dart';
 import 'package:dentmind_dental_centre/screens/services_details.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -156,22 +157,34 @@ class _MainDashboardState extends State<MainDashboard> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Browse by category",
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
                           fontSize: 16),
                     ),
-                    Text(
-                      "View All",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w200,
-                          decoration: TextDecoration.underline,
-                          decorationThickness: 2,
-                          color: primaryAppColor),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) =>
+                                    const AllServicesListScreen())));
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "View All",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w200,
+                              decoration: TextDecoration.underline,
+                              decorationThickness: 2,
+                              color: primaryAppColor),
+                        ),
+                      ),
                     )
                   ],
                 ),

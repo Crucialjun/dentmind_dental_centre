@@ -46,6 +46,7 @@ class _MainPageViewState extends State<MainPageView> {
                 activeColor: Colors.blue),
           ]),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: (index) {
           setState(() => _selectedIndex = index);
