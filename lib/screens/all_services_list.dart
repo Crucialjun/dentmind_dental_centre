@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/widgets/service_list_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/services_model.dart';
 import 'services_details.dart';
@@ -28,12 +29,11 @@ class _AllServicesListScreenState extends State<AllServicesListScreen> {
                 style: TextStyle(
                     color: primaryAppColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 24),
+                    fontSize: 28),
               ),
               Expanded(
                 child: FutureBuilder(
-                    future: DefaultAssetBundle.of(context)
-                        .loadString("data/services.json"),
+                    future: rootBundle.loadString('assets/services.json'),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(

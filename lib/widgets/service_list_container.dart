@@ -32,8 +32,9 @@ class ServiceListContainer extends StatelessWidget {
             child: Row(
           children: [
             CircleAvatar(
+                radius: 32,
                 backgroundColor: Colors.white,
-                child: SvgPicture.asset("${service.imageName}.svg")),
+                child: SvgPicture.asset("assets/${service.imageName}.svg")),
             const SizedBox(
               width: 8,
             ),
@@ -43,7 +44,9 @@ class ServiceListContainer extends StatelessWidget {
                   Text(
                     service.serviceName,
                     style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w600),
+                        fontSize: 22,
+                        color: primaryAppColor,
+                        fontWeight: FontWeight.w600),
                   ),
                   Text(
                     service.serviceDescription,

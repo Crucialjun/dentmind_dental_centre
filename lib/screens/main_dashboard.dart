@@ -4,10 +4,12 @@ import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/models/services_model.dart';
 import 'package:dentmind_dental_centre/screens/all_services_list.dart';
+import 'package:dentmind_dental_centre/screens/appointment_booking_screen.dart';
 import 'package:dentmind_dental_centre/screens/services_details.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
@@ -194,8 +196,7 @@ class _MainDashboardState extends State<MainDashboard> {
                 SizedBox(
                     height: 120,
                     child: FutureBuilder(
-                        future: DefaultAssetBundle.of(context)
-                            .loadString("data/services.json"),
+                        future: rootBundle.loadString('assets/services.json'),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -364,7 +365,13 @@ class _MainDashboardState extends State<MainDashboard> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 24, 153, 93)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) =>
+                                const AppoitnmentBooking())));
+                  },
                   child: const Text("Book Now"))
             ],
           ),
@@ -379,8 +386,7 @@ class _MainDashboardState extends State<MainDashboard> {
   }
 
   Future<List> loadServices() async {
-    var list =
-        await DefaultAssetBundle.of(context).loadString("data/services.json");
+    var list = await rootBundle.loadString('assets/services.json');
 
     List decode = jsonDecode(list);
 

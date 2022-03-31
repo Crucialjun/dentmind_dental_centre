@@ -71,4 +71,9 @@ class DentmindServices {
   @override
   int get hashCode =>
       serviceName.hashCode ^ serviceDescription.hashCode ^ imageName.hashCode;
+
+  factory DentmindServices.fromRawJson(String str) =>
+      DentmindServices.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 }

@@ -40,23 +40,20 @@ class _ServicesDetailsPageState extends State<ServicesDetailsPage> {
                   ),
                 ],
               ),
-              Expanded(
-                  child: Stack(
-                children: [
-                  SvgPicture.asset("${widget.service.imageName}.svg"),
-                  const Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 28,
-                      backgroundImage: AssetImage("assets/love.png"),
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                ],
-              )),
+              Container(
+                height: 240,
+                width: 240,
+                color: Colors.transparent,
+                child:
+                    SvgPicture.asset("assets/${widget.service.imageName}.svg"),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
               Text(
                 widget.service.serviceName,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.start,
                 style: const TextStyle(
                     color: primaryAppColor,
                     fontWeight: FontWeight.bold,
