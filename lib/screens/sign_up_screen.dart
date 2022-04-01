@@ -1,7 +1,7 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:dentmind_dental_centre/utils/text_form_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -74,134 +74,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your First Name";
-                          } else if (!RegExp('[a-zA-Z]').hasMatch(value)) {
-                            return "Enter a valid First Name";
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.name,
-                        controller: _firstNameController,
-                        decoration: InputDecoration(
-                            labelStyle: const TextStyle(
-                                color: primaryAppColor,
-                                fontWeight: FontWeight.w600),
-                            labelText: "First Name",
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: accentAppColor, width: 2.0),
-                              borderRadius: BorderRadius.circular(25.0),
-                            )),
-                      ),
+                      child: TextFormTextField(
+                          controller: _firstNameController,
+                          label: "First Name",
+                          inputType: TextInputType.name),
                     ),
                     const SizedBox(
                       width: 8,
                     ),
                     Expanded(
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your Last Name";
-                          } else if (!RegExp('[a-zA-Z]').hasMatch(value)) {
-                            return "Please enter a valid Last Name";
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.name,
-                        controller: _lastNameController,
-                        decoration: InputDecoration(
-                            labelStyle: const TextStyle(
-                                color: primaryAppColor,
-                                fontWeight: FontWeight.w600),
-                            labelText: "Last Name",
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: accentAppColor, width: 2.0),
-                              borderRadius: BorderRadius.circular(25.0),
-                            )),
-                      ),
-                    ),
+                        child: TextFormTextField(
+                            controller: _lastNameController,
+                            label: "Last Name",
+                            inputType: TextInputType.name)),
                   ],
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
-                  validator: ((value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an Email Address";
-                    } else if (!EmailValidator.validate(value.trim())) {
-                      return "Please enter a valid Email Address";
-                    }
-                    return null;
-                  }),
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                          color: primaryAppColor, fontWeight: FontWeight.w600),
-                      labelText: "Email",
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: primaryAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: primaryAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: accentAppColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(25.0),
-                      )),
-                ),
+                TextFormTextField(
+                    label: "Email",
+                    controller: _emailController,
+                    inputType: TextInputType.emailAddress),
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
-                    obscureText: true,
+                TextFormTextField(
+                    label: "Set Password",
                     controller: _passwordController,
-                    decoration: InputDecoration(
-                        labelText: "Set Password",
-                        labelStyle: const TextStyle(
-                            color: primaryAppColor,
-                            fontWeight: FontWeight.w600),
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: primaryAppColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: primaryAppColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: accentAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ))),
+                    inputType: TextInputType.visiblePassword),
                 const SizedBox(
                   height: 4,
                 ),
