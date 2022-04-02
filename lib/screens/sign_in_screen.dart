@@ -1,6 +1,7 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
+import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -59,49 +60,14 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 24,
             ),
             TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                  labelStyle: const TextStyle(
-                      color: primaryAppColor, fontWeight: FontWeight.w600),
-                  labelText: "Email",
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: primaryAppColor, width: 2.0),
-                      borderRadius: BorderRadius.circular(25.0)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: primaryAppColor, width: 2.0),
-                      borderRadius: BorderRadius.circular(25.0)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: accentAppColor, width: 2.0),
-                    borderRadius: BorderRadius.circular(25.0),
-                  )),
-            ),
+                controller: _emailController,
+                decoration: const TextFormDecoration(labelString: "Email")),
             const SizedBox(
               height: 16,
             ),
             TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                    labelText: "Password",
-                    labelStyle: const TextStyle(
-                        color: primaryAppColor, fontWeight: FontWeight.w600),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: primaryAppColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(25.0)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: primaryAppColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(25.0)),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: accentAppColor, width: 2.0),
-                      borderRadius: BorderRadius.circular(25.0),
-                    ))),
+                decoration: const TextFormDecoration(labelString: "Password")),
             const SizedBox(
               height: 16,
             ),

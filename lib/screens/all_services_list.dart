@@ -19,18 +19,22 @@ class _AllServicesListScreenState extends State<AllServicesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        title: const Text("All Services",
+            style: TextStyle(
+                color: primaryAppColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 24)),
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(4.0),
           child: Column(
             children: [
-              const Text(
-                "All Services",
-                style: TextStyle(
-                    color: primaryAppColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28),
-              ),
               Expanded(
                 child: FutureBuilder(
                     future: rootBundle.loadString('assets/services.json'),

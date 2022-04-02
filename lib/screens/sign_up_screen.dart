@@ -1,7 +1,8 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:dentmind_dental_centre/utils/text_field_validators.dart';
+import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -76,34 +77,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Expanded(
                       child: TextFormField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your First Name";
-                          } else if (!RegExp('[a-zA-Z]').hasMatch(value)) {
-                            return "Enter a valid First Name";
-                          }
-                          return null;
+                          return firstNameValidator(value);
                         },
                         keyboardType: TextInputType.name,
                         controller: _firstNameController,
-                        decoration: InputDecoration(
-                            labelStyle: const TextStyle(
-                                color: primaryAppColor,
-                                fontWeight: FontWeight.w600),
-                            labelText: "First Name",
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: accentAppColor, width: 2.0),
-                              borderRadius: BorderRadius.circular(25.0),
-                            )),
+                        decoration:
+                            const TextFormDecoration(labelString: "First Name"),
                       ),
                     ),
                     const SizedBox(
@@ -111,35 +90,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your Last Name";
-                          } else if (!RegExp('[a-zA-Z]').hasMatch(value)) {
-                            return "Please enter a valid Last Name";
-                          }
-                          return null;
-                        },
+                        validator: (value) => lastNameValidator(value),
                         keyboardType: TextInputType.name,
                         controller: _lastNameController,
-                        decoration: InputDecoration(
-                            labelStyle: const TextStyle(
-                                color: primaryAppColor,
-                                fontWeight: FontWeight.w600),
-                            labelText: "Last Name",
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: primaryAppColor, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: accentAppColor, width: 2.0),
-                              borderRadius: BorderRadius.circular(25.0),
-                            )),
+                        decoration:
+                            const TextFormDecoration(labelString: "Last Name"),
                       ),
                     ),
                   ],
@@ -148,60 +103,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 16,
                 ),
                 TextFormField(
-                  validator: ((value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an Email Address";
-                    } else if (!EmailValidator.validate(value.trim())) {
-                      return "Please enter a valid Email Address";
-                    }
-                    return null;
-                  }),
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                          color: primaryAppColor, fontWeight: FontWeight.w600),
-                      labelText: "Email",
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: primaryAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: primaryAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: accentAppColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(25.0),
-                      )),
-                ),
+                    validator: ((value) => emailValidator(value)),
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailController,
+                    decoration: const TextFormDecoration(labelString: "Email")),
                 const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                     obscureText: true,
                     controller: _passwordController,
-                    decoration: InputDecoration(
-                        labelText: "Set Password",
-                        labelStyle: const TextStyle(
-                            color: primaryAppColor,
-                            fontWeight: FontWeight.w600),
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: primaryAppColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: primaryAppColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: accentAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ))),
+                    decoration:
+                        const TextFormDecoration(labelString: "Set Password")),
                 const SizedBox(
                   height: 4,
                 ),
@@ -237,25 +150,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     obscureText: true,
                     controller: _confirmPasswordController,
-                    decoration: InputDecoration(
-                        labelText: "Confirm Password",
-                        labelStyle: const TextStyle(
-                            color: primaryAppColor,
-                            fontWeight: FontWeight.w600),
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: primaryAppColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: primaryAppColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: accentAppColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ))),
+                    decoration: const TextFormDecoration(
+                        labelString: "Confirm Password")),
                 const SizedBox(
                   height: 24,
                 ),
