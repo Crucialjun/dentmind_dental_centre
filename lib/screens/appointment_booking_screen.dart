@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/utils/text_field_validators.dart';
 import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+
+import '../models/services_model.dart';
 
 class AppoitnmentBooking extends StatefulWidget {
   const AppoitnmentBooking({Key? key}) : super(key: key);
@@ -23,7 +27,19 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
     'Mombasa Road',
     'Buruburu',
   ];
+  List listOfServices = [];
   String? selectedBranch;
+  String? selectedService;
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+
+  bool isDateSelected = false;
+  bool isTimeSelected = false;
+  @override
+  void initState() {
+    super.initState();
+    loadServices();
+  }
 
   @override
   void dispose() {
@@ -124,24 +140,167 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                 selectedBranch = value.toString();
               },
             ),
-            TextButton(
-                onPressed: () {
-                  DatePicker.showDatePicker(context,
-                      showTitleActions: true,
-                      minTime: DateTime(2018, 3, 5),
-                      maxTime: DateTime(2019, 6, 7), onChanged: (date) {
-                    print('change $date');
-                  }, onConfirm: (date) {
-                    print('confirm $date');
-                  }, currentTime: DateTime.now(), locale: LocaleType.en);
-                },
-                child: const Text(
-                  'show date time picker (Chinese)',
-                  style: TextStyle(color: Colors.blue),
-                ))
+            const SizedBox(
+              height: 16,
+            ),
+            DropdownButtonFormField2(
+              focusColor: Colors.white,
+              value: selectedService,
+              items: listOfServices
+                  .map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e),
+                      ))
+                  .toList(),
+              decoration:
+                  const TextFormDecoration(labelString: "Choose Service"),
+              validator: (value) {
+                if (value == null) {
+                  return 'Please Select Service';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                //Do something when changing the item if you want.
+              },
+              onSaved: (value) {
+                selectedBranch = value.toString();
+              },
+            ),
+            Row(
+              children: [
+                const Text(
+                  'Pick a date for the appointment',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(
+                  width: 24,
+                ),
+                TextButton(
+                    onPressed: () async {
+                      var dateSelected = await showDatePicker(
+                          context: context,
+                          initialDate: _selectedDate,
+                          firstDate: DateTime(2022),
+                          lastDate: DateTime(2030));
+
+                      if (dateSelected != null &&
+                          dateSelected != _selectedDate) {
+                        setState(() {
+                          _selectedDate = dateSelected;
+                        });
+                      }
+                    },
+                    child: Text(
+                        "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
+                        style: const TextStyle(
+                          color: primaryAppColor,
+                          fontWeight: FontWeight.w600,
+                        ))),
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                const Text(
+                  'Pick a date for the appointment',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(
+                  width: 24,
+                ),
+                TextButton(
+                    onPressed: () async {
+                      var timeSelected = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(_selectedDate));
+
+                      if (timeSelected != null &&
+                          timeSelected != _selectedTime) {
+                        setState(() {
+                          _selectedTime = timeSelected;
+                        });
+                      }
+                    },
+                    child: Text("${_selectedTime.hour}:${_selectedTime.minute}",
+                        style: const TextStyle(
+                          color: primaryAppColor,
+                          fontWeight: FontWeight.w600,
+                        ))),
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const Text("Enter additional appointment details",
+                style: TextStyle(
+                  color: primaryAppColor,
+                  fontWeight: FontWeight.w600,
+                )),
+            const TextField(
+              keyboardType: TextInputType.multiline,
+              maxLength: null,
+              maxLines: null,
+              decoration: TextFormDecoration(labelString: ""),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: accentAppColor,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Cancel",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    )),
+                ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryAppColor,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Book Now",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    )),
+              ],
+            ),
           ],
         ),
       )),
     );
+  }
+
+  Future loadServices() async {
+    var list = await rootBundle.loadString('assets/services.json');
+
+    List decode = jsonDecode(list);
+
+    for (var i = 0; i < decode.length; i++) {
+      var services = DentmindServices.fromJson(decode[i]);
+      listOfServices.add(services.serviceName);
+    }
+
+    setState(() {});
   }
 }

@@ -36,7 +36,6 @@ class _MainDashboardState extends State<MainDashboard> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
   }
 

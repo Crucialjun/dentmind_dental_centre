@@ -1,16 +1,13 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
-<<<<<<< HEAD
-import 'package:dentmind_dental_centre/utils/text_field_validators.dart';
-import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
-=======
 import 'package:dentmind_dental_centre/utils/text_form_text_field.dart';
->>>>>>> 1dc4312ba99d160f3e56dcab504aa18b852169ba
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../utils/text_form_decoration.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -79,71 +76,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   children: [
                     Expanded(
-<<<<<<< HEAD
-                      child: TextFormField(
-                        validator: (value) {
-                          return firstNameValidator(value);
-                        },
-                        keyboardType: TextInputType.name,
-                        controller: _firstNameController,
-                        decoration:
-                            const TextFormDecoration(labelString: "First Name"),
-                      ),
-=======
                       child: TextFormTextField(
                           controller: _firstNameController,
                           label: "First Name",
                           inputType: TextInputType.name),
->>>>>>> 1dc4312ba99d160f3e56dcab504aa18b852169ba
                     ),
                     const SizedBox(
                       width: 8,
                     ),
                     Expanded(
-<<<<<<< HEAD
-                      child: TextFormField(
-                        validator: (value) => lastNameValidator(value),
-                        keyboardType: TextInputType.name,
-                        controller: _lastNameController,
-                        decoration:
-                            const TextFormDecoration(labelString: "Last Name"),
-                      ),
-                    ),
-=======
                         child: TextFormTextField(
                             controller: _lastNameController,
                             label: "Last Name",
                             inputType: TextInputType.name)),
->>>>>>> 1dc4312ba99d160f3e56dcab504aa18b852169ba
                   ],
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-<<<<<<< HEAD
-                TextFormField(
-                    validator: ((value) => emailValidator(value)),
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    decoration: const TextFormDecoration(labelString: "Email")),
-=======
                 TextFormTextField(
                     label: "Email",
                     controller: _emailController,
                     inputType: TextInputType.emailAddress),
->>>>>>> 1dc4312ba99d160f3e56dcab504aa18b852169ba
                 const SizedBox(
                   height: 16,
                 ),
                 TextFormTextField(
                     label: "Set Password",
                     controller: _passwordController,
-<<<<<<< HEAD
-                    decoration:
-                        const TextFormDecoration(labelString: "Set Password")),
-=======
                     inputType: TextInputType.visiblePassword),
->>>>>>> 1dc4312ba99d160f3e56dcab504aa18b852169ba
                 const SizedBox(
                   height: 4,
                 ),
