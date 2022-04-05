@@ -4,7 +4,6 @@ import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/screens/string_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../app_colors.dart';

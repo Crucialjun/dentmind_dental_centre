@@ -1,13 +1,10 @@
-import 'package:dentmind_dental_centre/screens/string_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../app_colors.dart';
-import '../firebase/firebase_auth.dart';
 import '../firebase/firebase_storage_methods.dart';
-import '../global_constants.dart';
 import '../models/client_model.dart';
 
 class EditAccountScreen extends StatefulWidget {
