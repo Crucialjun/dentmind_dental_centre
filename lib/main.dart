@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseUserRepo>(create: (_) => FirebaseUserRepo()),
+        Provider<FirebaseUserRepo?>(create: (_) => FirebaseUserRepo()),
         StreamProvider(
           create: (context) => context.read<FirebaseUserRepo>().authState,
           initialData: null,

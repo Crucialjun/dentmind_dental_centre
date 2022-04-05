@@ -1,15 +1,20 @@
 import 'dart:convert';
 
 import 'package:dentmind_dental_centre/app_colors.dart';
+import 'package:dentmind_dental_centre/firebase/firebase_storage_methods.dart';
 import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:provider/provider.dart';
 
+import '../models/appointment_model.dart';
 import '../models/services_model.dart';
 
 class AppoitnmentBooking extends StatefulWidget {
@@ -25,11 +30,15 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
     'Mombasa Road',
     'Buruburu',
   ];
-  List listOfServices = [];
+  List listOfServices = [""];
   String? selectedBranch;
   String? selectedService;
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
+  PhoneNumber? _phoneNumber;
+  Country? _country;
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _extraDetailController = TextEditingController();
 
   bool isDateSelected = false;
   bool isTimeSelected = false;
@@ -42,12 +51,14 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
 
   @override
   void dispose() {
+    _phoneNumberController.dispose();
+    _extraDetailController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Client _client = context.watch<Client>();
+    final Client? _client = context.watch<Client?>();
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
@@ -60,26 +71,33 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
           padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
           child: Column(
             children: [
-              Text(_client.firstName),
               SizedBox(
                   height: 240,
                   child: SvgPicture.asset("assets/appointment.svg")),
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Book an Appoitment",
+                  "Book an Appointment",
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                      fontFamily: GoogleFonts.chivo().fontFamily,
                       color: primaryAppColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 32),
                 ),
               ),
               IntlPhoneField(
-                initialCountryCode:
-                    WidgetsBinding.instance!.window.locale.countryCode,
+                autovalidateMode: AutovalidateMode.disabled,
+                initialCountryCode: "us",
                 decoration:
                     const TextFormDecoration(labelString: "Phone Number"),
+                controller: _phoneNumberController,
+                onChanged: (phone) {
+                  _phoneNumber = phone;
+                },
+                onCountryChanged: (country) {
+                  _country = country;
+                },
               ),
               DropdownButtonFormField2(
                 focusColor: Colors.white,
@@ -92,17 +110,15 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                     .toList(),
                 decoration:
                     const TextFormDecoration(labelString: "Choose Branch"),
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please Select Branch';
-                  }
-                  return null;
-                },
                 onChanged: (value) {
-                  //Do something when changing the item if you want.
+                  setState(() {
+                    selectedBranch = value.toString();
+                  });
                 },
                 onSaved: (value) {
-                  selectedBranch = value.toString();
+                  setState(() {
+                    selectedBranch = value.toString();
+                  });
                 },
               ),
               const SizedBox(
@@ -126,11 +142,11 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                   return null;
                 },
                 onChanged: (value) {
-                  //Do something when changing the item if you want.
+                  setState(() {
+                    selectedService = value.toString();
+                  });
                 },
-                onSaved: (value) {
-                  selectedBranch = value.toString();
-                },
+                onSaved: (value) {},
               ),
               Row(
                 children: [
@@ -211,11 +227,12 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                     color: primaryAppColor,
                     fontWeight: FontWeight.w600,
                   )),
-              const TextField(
+              TextField(
+                controller: _extraDetailController,
                 keyboardType: TextInputType.multiline,
                 maxLength: null,
                 maxLines: null,
-                decoration: TextFormDecoration(labelString: ""),
+                decoration: const TextFormDecoration(labelString: ""),
               ),
               const SizedBox(
                 height: 8,
@@ -237,7 +254,24 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                             )),
                       )),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        var phoneNumber = _phoneNumber!.completeNumber;
+                        var branch = selectedBranch;
+                        var service = selectedService;
+                        var date =
+                            "${_selectedDate.toString()} ${_selectedTime.toString()}";
+                        var additionalInfo = _extraDetailController.text;
+
+                        Appointment appointment = Appointment(
+                            clientuid: _client?.uid ?? "",
+                            phonenumber: phoneNumber,
+                            branch: branch ?? "",
+                            service: service ?? "",
+                            time: DateTime.now(),
+                            additionalInfo: additionalInfo);
+
+                        FirebaseStorageMethods().addAppointment(appointment);
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: primaryAppColor,
                       ),
