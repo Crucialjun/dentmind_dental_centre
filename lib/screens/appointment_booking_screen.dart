@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:dentmind_dental_centre/app_colors.dart';
+import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
 
 import '../models/services_model.dart';
 
@@ -31,6 +33,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
 
   bool isDateSelected = false;
   bool isTimeSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +47,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
 
   @override
   Widget build(BuildContext context) {
+    final Client _client = context.watch<Client>();
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
@@ -56,6 +60,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
           padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
           child: Column(
             children: [
+              Text(_client.firstName),
               SizedBox(
                   height: 240,
                   child: SvgPicture.asset("assets/appointment.svg")),

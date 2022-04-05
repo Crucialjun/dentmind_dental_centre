@@ -12,10 +12,10 @@ class FirebaseStorageMethods extends ChangeNotifier {
     clients.doc(client.uid).set(client.toMap());
   }
 
-  Future<Client?> getClient(String uid)  async {
+  Future<Client?> getClient(String uid) async {
     try {
       DocumentSnapshot snap = await clients.doc(uid).get();
-
+      notifyListeners();
       return Client.fromDocumentSnapshot(snap);
     } catch (e) {
       print(e.toString());
