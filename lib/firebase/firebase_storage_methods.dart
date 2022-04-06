@@ -28,12 +28,23 @@ class FirebaseStorageMethods extends ChangeNotifier {
     return null;
   }
 
-  Future addAppointment(Appointment appointment) async {
+  Future addAppointment(Appointment appointment, String uid) async {
     var appointmentId = const Uuid().v4();
     try {
       await appointments.doc(appointmentId).set(appointment.toMap());
+      await clients.doc(uid).update({
+        'appointments': FieldValue.arrayUnion([appointmentId])
+      });
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<Appointment?> getAppointment(String id) async {
+    try {
+      DocumentSnapshot snap = await appointments.doc(id).get();
+      return Appointment.fromDocumentSnapshot(snap);
+    } catch (e) {}
+    return null;
   }
 }

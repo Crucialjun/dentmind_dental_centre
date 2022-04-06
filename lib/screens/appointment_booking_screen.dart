@@ -267,12 +267,13 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                         Appointment appointment = Appointment(
                             clientuid: _client?.uid ?? "",
                             phonenumber: phoneNumber,
-                            branch: branch ?? "",
+                            branch: branch ?? widget.location,
                             service: service ?? "",
                             time: DateTime.now(),
                             additionalInfo: additionalInfo);
 
-                        FirebaseStorageMethods().addAppointment(appointment);
+                        FirebaseStorageMethods()
+                            .addAppointment(appointment, _client?.uid ?? "");
                       },
                       style: ElevatedButton.styleFrom(
                         primary: primaryAppColor,

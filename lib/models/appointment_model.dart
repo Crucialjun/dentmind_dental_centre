@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Appointment {
   String clientuid;
   String phonenumber;
@@ -53,6 +55,17 @@ class Appointment {
       service: map['service'] ?? '',
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       additionalInfo: map['additionalInfo'] ?? '',
+    );
+  }
+
+  factory Appointment.fromDocumentSnapshot(DocumentSnapshot snap) {
+    return Appointment(
+      clientuid: snap['clientuid'] ?? '',
+      phonenumber: snap['phonenumber'] ?? '',
+      branch: snap['branch'] ?? '',
+      service: snap['service'] ?? '',
+      time: DateTime.fromMillisecondsSinceEpoch(snap['time']),
+      additionalInfo: snap['additionalInfo'] ?? '',
     );
   }
 
