@@ -18,7 +18,10 @@ import '../models/appointment_model.dart';
 import '../models/services_model.dart';
 
 class AppoitnmentBooking extends StatefulWidget {
-  const AppoitnmentBooking({Key? key}) : super(key: key);
+  const AppoitnmentBooking({Key? key, required this.location})
+      : super(key: key);
+
+  final String location;
 
   @override
   State<AppoitnmentBooking> createState() => _AppoitnmentBookingState();
@@ -30,7 +33,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
     'Mombasa Road',
     'Buruburu',
   ];
-  List listOfServices = [""];
+  List listOfServices = [];
   String? selectedBranch;
   String? selectedService;
   DateTime _selectedDate = DateTime.now();
@@ -88,7 +91,6 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
               ),
               IntlPhoneField(
                 autovalidateMode: AutovalidateMode.disabled,
-                initialCountryCode: "us",
                 decoration:
                     const TextFormDecoration(labelString: "Phone Number"),
                 controller: _phoneNumberController,
@@ -101,7 +103,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
               ),
               DropdownButtonFormField2(
                 focusColor: Colors.white,
-                value: selectedBranch,
+                value: selectedBranch ?? widget.location,
                 items: branches
                     .map((e) => DropdownMenuItem(
                           value: e,
@@ -189,7 +191,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
               Row(
                 children: [
                   const Text(
-                    'Pick a date for the appointment',
+                    'Pick the time for the appointment',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
@@ -211,12 +213,12 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                           });
                         }
                       },
-                      child:
-                          Text("${_selectedTime.hour}:${_selectedTime.minute}",
-                              style: const TextStyle(
-                                color: primaryAppColor,
-                                fontWeight: FontWeight.w600,
-                              ))),
+                      child: Text(
+                          "${_selectedTime.hourOfPeriod}:${_selectedTime.minute}",
+                          style: const TextStyle(
+                            color: primaryAppColor,
+                            fontWeight: FontWeight.w600,
+                          ))),
                 ],
               ),
               const SizedBox(
