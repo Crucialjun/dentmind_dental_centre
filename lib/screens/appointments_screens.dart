@@ -1,4 +1,5 @@
 import 'package:dentmind_dental_centre/firebase/firebase_storage_methods.dart';
+import 'package:dentmind_dental_centre/widgets/appointment_list_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,30 +20,33 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     appointmentsids = context.watch<Client?>()!.appointments;
-    return FutureBuilder(
-      future: loadAppointments(appointmentsids),
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (snapshot.data == null) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return ListView.builder(
-          itemCount: ((snapshot.data) as List<Appointment>).length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-                title: Text(
-              ((snapshot.data[0]) as Appointment).clientuid,
-            ));
+    return Scaffold(
+      body: Center(
+        child: FutureBuilder(
+          future: loadAppointments(appointmentsids),
+          initialData: null,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.data == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+              itemCount: ((snapshot.data) as List<Appointment>).length,
+              itemBuilder: (BuildContext context, int index) {
+                return AppointmentListCard(
+                  appointment: snapshot.data[index],
+                );
+              },
+            );
           },
-        );
-      },
+        ),
+      ),
     );
   }
 
