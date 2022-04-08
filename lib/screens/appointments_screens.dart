@@ -21,30 +21,55 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   Widget build(BuildContext context) {
     appointmentsids = context.watch<Client?>()!.appointments;
     return Scaffold(
-      body: Center(
-        child: FutureBuilder(
-          future: loadAppointments(appointmentsids),
-          initialData: null,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return ListView.builder(
-              itemCount: ((snapshot.data) as List<Appointment>).length,
-              itemBuilder: (BuildContext context, int index) {
-                return AppointmentListCard(
-                  appointment: snapshot.data[index],
-                );
-              },
-            );
-          },
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          "My Appointments",
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  child: const Text(
+                    "Upcoming Appointments",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black),
+                  )),
+            ),
+            Expanded(
+              child: FutureBuilder(
+                future: loadAppointments(appointmentsids),
+                initialData: null,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.data == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: ((snapshot.data) as List<Appointment>).length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AppointmentListCard(
+                        appointment: snapshot.data[index],
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
