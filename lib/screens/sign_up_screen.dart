@@ -101,10 +101,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormTextField(
-                    label: "Set Password",
+                TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter your password";
+                      } else if (!_isPasswordValid) {
+                        return "Please enter a valid password";
+                      }
+                      return null;
+                    },
+                    obscureText: true,
                     controller: _passwordController,
-                    inputType: TextInputType.visiblePassword),
+                    decoration:
+                        const TextFormDecoration(labelString: "Set Password")),
                 const SizedBox(
                   height: 4,
                 ),

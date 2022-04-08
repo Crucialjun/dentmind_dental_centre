@@ -4,13 +4,12 @@ import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/models/services_model.dart';
 import 'package:dentmind_dental_centre/screens/all_services_list.dart';
-import 'package:dentmind_dental_centre/screens/appointment_booking_screen.dart';
 import 'package:dentmind_dental_centre/screens/services_details.dart';
+import 'package:dentmind_dental_centre/widgets/appointment_card.dart';
 import 'package:dentmind_dental_centre/widgets/category_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
 import "string_extensions.dart";
@@ -69,6 +68,12 @@ class _MainDashboardState extends State<MainDashboard> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500));
                       } else if (snapshot.hasError) {
+                        return const Text("Hello user",
+                            style: TextStyle(
+                                color: primaryAppColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500));
+                      } else if (snapshot.data == null) {
                         return const Text("Hello user",
                             style: TextStyle(
                                 color: primaryAppColor,
@@ -232,31 +237,31 @@ class _MainDashboardState extends State<MainDashboard> {
                 ),
                 Expanded(
                   child: ListView(
-                    children: [
-                      appointmentCard(
-                          "Dental Surgeon",
-                          "Nabea",
-                          "Bachelor of Dental Surgery (BDS)",
-                          "nabea",
-                          "Kitengela"),
-                      const SizedBox(
+                    children: const [
+                      AppointmentCard(
+                          speciality: "Dental Surgeon",
+                          name: "Nabea",
+                          qualification: "Bachelor of Dental Surgery (BDS)",
+                          image: "nabea",
+                          location: "Kitengela"),
+                      SizedBox(
                         height: 16,
                       ),
-                      appointmentCard(
-                          "Dental Surgeon",
-                          "Muturi",
-                          "Bachelor of Dental Surgery (BDS)",
-                          "muturi",
-                          "Mombasa Road"),
-                      const SizedBox(
+                      AppointmentCard(
+                          speciality: "Dental Surgeon",
+                          name: "Muturi",
+                          qualification: "Bachelor of Dental Surgery (BDS)",
+                          image: "muturi",
+                          location: "Mombasa Road"),
+                      SizedBox(
                         height: 16,
                       ),
-                      appointmentCard(
-                          "Dental Surgeon",
-                          "Nabea",
-                          "Bachelor of Dental Surgery (BDS)",
-                          "nabea",
-                          "Buruburu"),
+                      AppointmentCard(
+                          speciality: "Dental Surgeon",
+                          name: "Nabea",
+                          qualification: "Bachelor of Dental Surgery (BDS)",
+                          image: "nabea",
+                          location: "Buruburu"),
                     ],
                   ),
                 ),
@@ -264,119 +269,6 @@ class _MainDashboardState extends State<MainDashboard> {
             ),
           ),
         ));
-  }
-
-  Container appointmentCard(String speciality, String name,
-      String qualification, String image, String location) {
-    return Container(
-      margin: const EdgeInsets.only(top: 4, left: 4, right: 4, bottom: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: primaryAppColor.withOpacity(0.5),
-            spreadRadius: 3,
-            blurRadius: 4,
-            offset: const Offset(0, 3),
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 50,
-                backgroundImage: AssetImage("assets/$image.jpg"),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "$speciality - Doctor $name",
-                      style: const TextStyle(
-                          color: primaryAppColor, fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      qualification,
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    RatingBar.builder(
-                        initialRating: 5,
-                        itemSize: 24.0,
-                        itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: accentAppColor,
-                            ),
-                        onRatingUpdate: (rating) {}),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    Text("Dentmind Dental Care $location",
-                        style: const TextStyle(
-                            color: primaryAppColor,
-                            fontWeight: FontWeight.w700)),
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Icon(Icons.favorite),
-                  SizedBox(
-                    height: 48,
-                  ),
-                  Text("1.5Km")
-                ],
-              )
-            ],
-          ),
-          const Divider(
-            thickness: 4,
-          ),
-          Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage("assets/chronometer.png"),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              const Expanded(
-                  child: Text(
-                "Open timings : 9:00am - 5:00pm",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-              )),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 24, 153, 93)),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) =>
-                                const AppoitnmentBooking())));
-                  },
-                  child: const Text("Book Now"))
-            ],
-          ),
-        ]),
-      ),
-    );
   }
 
   Future<Client?> getClient(User? firebaseUser) async {

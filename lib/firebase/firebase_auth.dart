@@ -25,7 +25,8 @@ class FirebaseUserRepo extends ChangeNotifier {
           firstName: firstName,
           lastName: lastName,
           uid: _firebaseAuth.currentUser!.uid,
-          phoneNumber: "");
+          phoneNumber: "",
+          appointments: []);
       await FirebaseStorageMethods().addClient(client);
       return true;
     } on FirebaseAuthException catch (e) {

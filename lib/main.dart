@@ -1,4 +1,6 @@
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
+import 'package:dentmind_dental_centre/firebase/firebase_storage_methods.dart';
+import 'package:dentmind_dental_centre/models/client_model.dart';
 import 'package:dentmind_dental_centre/screens/edit_account_screen.dart';
 import 'package:dentmind_dental_centre/screens/onboarding_screen.dart';
 import 'package:dentmind_dental_centre/screens/sign_in_screen.dart';
@@ -7,6 +9,7 @@ import 'package:dentmind_dental_centre/screens/splash_screen.dart';
 import 'package:dentmind_dental_centre/utils/auth_checker.dart';
 import 'package:dentmind_dental_centre/utils/custom_scroll.dart';
 import 'package:dentmind_dental_centre/utils/main_pageview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,11 +34,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseUserRepo>(create: (_) => FirebaseUserRepo()),
+        Provider<FirebaseUserRepo?>(create: (_) => FirebaseUserRepo()),
         StreamProvider(
           create: (context) => context.read<FirebaseUserRepo>().authState,
           initialData: null,
         ),
+        ChangeNotifierProvider(create: ((context) => FirebaseStorageMethods())),
+        FutureProvider<Client?>(
+          create: (context) =>
+              FirebaseStorageMethods().getClient(context.read<User>().uid),
+          initialData: null,
+        )
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

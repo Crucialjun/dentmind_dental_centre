@@ -11,3 +11,6 @@ const String accountEditRoute = "AccountEdit";
 
 //client table
 const String clientTableName = "Clients";
+
+//appointments table
+const String appointmentsTableName = "Appointments";

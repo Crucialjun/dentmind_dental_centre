@@ -9,6 +9,7 @@ class Client {
   String phoneNumber;
   String uid;
   String? profileImageUrl;
+  List appointments;
 
   Client({
     required this.firstName,
@@ -17,6 +18,7 @@ class Client {
     required this.phoneNumber,
     required this.uid,
     this.profileImageUrl,
+    required this.appointments,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class Client {
       'phoneNumber': phoneNumber,
       'uid': uid,
       'profileImageUrl': profileImageUrl,
+      'appointments': appointments,
     };
   }
 
@@ -37,7 +40,8 @@ class Client {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       uid: map['uid'] ?? '',
-      profileImageUrl: map['profileImageUrl'],
+      profileImageUrl: map['profileImageUrl'] ?? "",
+      appointments: map['appointments'] ?? [],
     );
   }
 
@@ -51,6 +55,7 @@ class Client {
       phoneNumber: snapshot['phoneNumber'] ?? '',
       uid: snapshot['uid'] ?? '',
       profileImageUrl: snapshot['profileImageUrl'] ?? '',
+      appointments: snapshot['appointments'] ?? [],
     );
   }
 
@@ -58,14 +63,14 @@ class Client {
 
   factory Client.fromJson(String source) => Client.fromMap(json.decode(source));
 
-  Client copyWith({
-    String? firstName,
-    String? lastName,
-    String? email,
-    String? phoneNumber,
-    String? uid,
-    String? profileImageUrl,
-  }) {
+  Client copyWith(
+      {String? firstName,
+      String? lastName,
+      String? email,
+      String? phoneNumber,
+      String? uid,
+      String? profileImageUrl,
+      List? appointments}) {
     return Client(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -73,12 +78,13 @@ class Client {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       uid: uid ?? this.uid,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      appointments: appointments ?? this.appointments,
     );
   }
 
   @override
   String toString() {
-    return 'Client(firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber, uid: $uid, profileImageUrl: $profileImageUrl)';
+    return 'Client(firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber, uid: $uid, profileImageUrl: $profileImageUrl,appointments: ${appointments.toString})';
   }
 
   @override
@@ -91,7 +97,8 @@ class Client {
         other.email == email &&
         other.phoneNumber == phoneNumber &&
         other.uid == uid &&
-        other.profileImageUrl == profileImageUrl;
+        other.profileImageUrl == profileImageUrl &&
+        other.appointments == appointments;
   }
 
   @override
@@ -101,6 +108,7 @@ class Client {
         email.hashCode ^
         phoneNumber.hashCode ^
         uid.hashCode ^
-        profileImageUrl.hashCode;
+        profileImageUrl.hashCode ^
+        appointments.hashCode;
   }
 }
