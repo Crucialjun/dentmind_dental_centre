@@ -127,7 +127,8 @@ class _AppointmentCardState extends State<AppointmentCard> {
                         context,
                         MaterialPageRoute(
                             builder: ((context) => AppoitnmentBooking(
-                                location: widget.location))));
+                                location: widget.location,
+                                name: widget.name))));
                   },
                   child: const Text("Book Now"))
             ],

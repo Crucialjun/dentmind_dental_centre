@@ -23,6 +23,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.purpleAccent,
         title: const Text(
           "My Appointments",
         ),
@@ -76,6 +77,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   }
 
   Future<List<Appointment>> loadAppointments(List appointmentsids) async {
+    print(appointmentsids);
     List<Appointment> appointmentsList = [];
     for (var id in appointmentsids) {
       Appointment? appointment =

@@ -240,7 +240,7 @@ class _MainDashboardState extends State<MainDashboard> {
                     children: const [
                       AppointmentCard(
                           speciality: "Dental Surgeon",
-                          name: "Nabea",
+                          name: "Doctor Nabea",
                           qualification: "Bachelor of Dental Surgery (BDS)",
                           image: "nabea",
                           location: "Kitengela"),
@@ -249,7 +249,7 @@ class _MainDashboardState extends State<MainDashboard> {
                       ),
                       AppointmentCard(
                           speciality: "Dental Surgeon",
-                          name: "Muturi",
+                          name: "Doctor Muturi",
                           qualification: "Bachelor of Dental Surgery (BDS)",
                           image: "muturi",
                           location: "Mombasa Road"),
@@ -258,7 +258,7 @@ class _MainDashboardState extends State<MainDashboard> {
                       ),
                       AppointmentCard(
                           speciality: "Dental Surgeon",
-                          name: "Nabea",
+                          name: "Doctor Nabea",
                           qualification: "Bachelor of Dental Surgery (BDS)",
                           image: "nabea",
                           location: "Buruburu"),

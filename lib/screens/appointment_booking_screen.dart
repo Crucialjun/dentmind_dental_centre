@@ -15,13 +15,16 @@ import 'package:intl_phone_field/phone_number.dart';
 import 'package:provider/provider.dart';
 
 import '../models/appointment_model.dart';
+import '../models/doctor_model.dart';
 import '../models/services_model.dart';
 
 class AppoitnmentBooking extends StatefulWidget {
-  const AppoitnmentBooking({Key? key, required this.location})
+  const AppoitnmentBooking(
+      {Key? key, required this.location, required this.name})
       : super(key: key);
 
   final String location;
+  final String name;
 
   @override
   State<AppoitnmentBooking> createState() => _AppoitnmentBookingState();
@@ -34,8 +37,10 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
     'Buruburu',
   ];
   List listOfServices = [];
+  List listOfDoctors = [];
   String? selectedBranch;
   String? selectedService;
+  Doctor? selectedDoctor;
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
   PhoneNumber? _phoneNumber;
@@ -46,10 +51,13 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
   bool isDateSelected = false;
   bool isTimeSelected = false;
 
+  Doctor? chosenDoctor;
+
   @override
   void initState() {
     super.initState();
     loadServices();
+    loadDoctors();
   }
 
   @override
@@ -149,6 +157,29 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                   });
                 },
                 onSaved: (value) {},
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              DropdownButtonFormField2(
+                focusColor: Colors.white,
+                value: selectedDoctor,
+                items: listOfDoctors
+                    .map((e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            (e).doctorName,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ))
+                    .toList(),
+                decoration:
+                    const TextFormDecoration(labelString: "Choose Doctor"),
+                onChanged: (value) {
+                  setState(() {
+                    selectedDoctor = value as Doctor?;
+                  });
+                },
               ),
               Row(
                 children: [
@@ -270,7 +301,8 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                             branch: branch ?? widget.location,
                             service: service ?? "",
                             time: DateTime.now(),
-                            additionalInfo: additionalInfo);
+                            additionalInfo: additionalInfo,
+                            doctor: selectedDoctor!);
 
                         FirebaseStorageMethods()
                             .addAppointment(appointment, _client?.uid ?? "");
@@ -301,8 +333,21 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
     List decode = jsonDecode(list);
 
     for (var i = 0; i < decode.length; i++) {
-      var services = DentmindServices.fromJson(decode[i]);
+      var services = DentmindServices.fromMap(decode[i]);
       listOfServices.add(services.serviceName);
+    }
+
+    setState(() {});
+  }
+
+  Future loadDoctors() async {
+    var listOfDoctorsJsons = await rootBundle.loadString('assets/doctors.json');
+
+    List decode = jsonDecode(listOfDoctorsJsons);
+
+    for (var i = 0; i < decode.length; i++) {
+      var doctor = Doctor.fromMap(decode[i]);
+      listOfDoctors.add(doctor);
     }
 
     setState(() {});

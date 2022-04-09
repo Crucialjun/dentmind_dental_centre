@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dentmind_dental_centre/models/doctor_model.dart';
 
 class Appointment {
   String clientuid;
@@ -9,6 +10,7 @@ class Appointment {
   String service;
   DateTime time;
   String additionalInfo;
+  Doctor doctor;
   Appointment({
     required this.clientuid,
     required this.phonenumber,
@@ -16,6 +18,7 @@ class Appointment {
     required this.service,
     required this.time,
     required this.additionalInfo,
+    required this.doctor,
   });
 
   Appointment copyWith({
@@ -25,6 +28,7 @@ class Appointment {
     String? service,
     DateTime? time,
     String? additionalInfo,
+    Doctor? doctor,
   }) {
     return Appointment(
       clientuid: clientuid ?? this.clientuid,
@@ -33,6 +37,7 @@ class Appointment {
       service: service ?? this.service,
       time: time ?? this.time,
       additionalInfo: additionalInfo ?? this.additionalInfo,
+      doctor: doctor ?? this.doctor,
     );
   }
 
@@ -44,6 +49,7 @@ class Appointment {
       'service': service,
       'time': time.millisecondsSinceEpoch,
       'additionalInfo': additionalInfo,
+      'doctor': doctor.toMap()
     };
   }
 
@@ -55,6 +61,7 @@ class Appointment {
       service: map['service'] ?? '',
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       additionalInfo: map['additionalInfo'] ?? '',
+      doctor: map['doctor'] ?? '',
     );
   }
 
@@ -66,6 +73,7 @@ class Appointment {
       service: snap['service'] ?? '',
       time: DateTime.fromMillisecondsSinceEpoch(snap['time']),
       additionalInfo: snap['additionalInfo'] ?? '',
+      doctor: Doctor.fromMap(snap['doctor']),
     );
   }
 
@@ -89,7 +97,8 @@ class Appointment {
         other.branch == branch &&
         other.service == service &&
         other.time == time &&
-        other.additionalInfo == additionalInfo;
+        other.additionalInfo == additionalInfo &&
+        other.doctor == doctor;
   }
 
   @override
@@ -99,6 +108,7 @@ class Appointment {
         branch.hashCode ^
         service.hashCode ^
         time.hashCode ^
-        additionalInfo.hashCode;
+        additionalInfo.hashCode ^
+        doctor.hashCode;
   }
 }
