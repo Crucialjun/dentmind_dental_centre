@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           scrollBehavior: CustomScroll(),
           title: appName,
           theme: ThemeData(
-            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontFamily: GoogleFonts.robotoSlab().fontFamily,
             primaryColor: const Color(0xFF0f4b87),
             colorScheme: ColorScheme.fromSwatch()
                 .copyWith(secondary: const Color(0xFFfcb017)),
