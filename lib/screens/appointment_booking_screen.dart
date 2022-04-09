@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
@@ -98,16 +99,19 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                 ),
               ),
               IntlPhoneField(
-                autovalidateMode: AutovalidateMode.disabled,
                 decoration:
                     const TextFormDecoration(labelString: "Phone Number"),
                 controller: _phoneNumberController,
                 onChanged: (phone) {
                   _phoneNumber = phone;
                 },
+                initialCountryCode: 'ke',
                 onCountryChanged: (country) {
                   _country = country;
                 },
+              ),
+              const SizedBox(
+                height: 12,
               ),
               DropdownButtonFormField2(
                 focusColor: Colors.white,
@@ -198,7 +202,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                         var dateSelected = await showDatePicker(
                             context: context,
                             initialDate: _selectedDate,
-                            firstDate: DateTime(2022),
+                            firstDate: DateTime.now(),
                             lastDate: DateTime(2030));
 
                         if (dateSelected != null &&
@@ -208,11 +212,10 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                           });
                         }
                       },
-                      child: Text(
-                          "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
+                      child: Text(DateFormat("yMMMMd").format(_selectedDate),
                           style: const TextStyle(
                             color: primaryAppColor,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                           ))),
                 ],
               ),
@@ -245,10 +248,15 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                         }
                       },
                       child: Text(
-                          "${_selectedTime.hourOfPeriod}:${_selectedTime.minute}",
+                          DateFormat("Hm").format(DateTime(
+                              _selectedDate.year,
+                              _selectedDate.month,
+                              _selectedDate.day,
+                              _selectedTime.hour,
+                              _selectedTime.minute)),
                           style: const TextStyle(
                             color: primaryAppColor,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                           ))),
                 ],
               ),
@@ -288,11 +296,15 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                       )),
                   ElevatedButton(
                       onPressed: () {
-                        var phoneNumber = _phoneNumber!.completeNumber;
+                        var phoneNumber = _phoneNumber!.number;
                         var branch = selectedBranch;
                         var service = selectedService;
-                        var date =
-                            "${_selectedDate.toString()} ${_selectedTime.toString()}";
+                        var datetime = DateTime(
+                            _selectedDate.year,
+                            _selectedDate.month,
+                            _selectedDate.day,
+                            _selectedTime.hour,
+                            _selectedTime.minute);
                         var additionalInfo = _extraDetailController.text;
 
                         Appointment appointment = Appointment(
@@ -300,7 +312,7 @@ class _AppoitnmentBookingState extends State<AppoitnmentBooking> {
                             phonenumber: phoneNumber,
                             branch: branch ?? widget.location,
                             service: service ?? "",
-                            time: DateTime.now(),
+                            time: datetime,
                             additionalInfo: additionalInfo,
                             doctor: selectedDoctor!);
 
