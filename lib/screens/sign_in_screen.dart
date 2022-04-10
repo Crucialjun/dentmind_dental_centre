@@ -3,6 +3,7 @@ import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/utils/text_form_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,8 +29,16 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Padding(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.dark),
+      ),
+      body: Padding(
         padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -199,7 +208,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }

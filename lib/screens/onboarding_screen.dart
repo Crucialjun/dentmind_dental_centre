@@ -2,6 +2,7 @@ import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/widgets/onboarding_pageview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -9,33 +10,20 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.only(
-            top: 8.0, right: 8.0, left: 8.0, bottom: 16.0),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.dark),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(right: 8.0, left: 8.0, bottom: 16.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  appName,
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: primaryAppColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, authCheckerRoute);
-                  },
-                  child: const Text(
-                    "Skip",
-                    style: TextStyle(color: primaryAppColor, fontSize: 22),
-                  ),
-                )
-              ],
-            ),
             Hero(tag: "logo", child: Image.asset('assets/logo.png')),
             const Flexible(child: OnboardingPageView()),
             ElevatedButton(
@@ -60,7 +48,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }

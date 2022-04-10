@@ -3,6 +3,7 @@ import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
 import 'package:dentmind_dental_centre/utils/text_form_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,10 +42,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.dark),
+      ),
       body: SingleChildScrollView(
           child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
+          padding: const EdgeInsets.only(right: 16, left: 16, bottom: 8),
           child: Form(
             key: _formKey,
             child: Column(
@@ -54,8 +64,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tag: 'logo',
                   child: Image.asset(
                     "assets/logo.png",
-                    height: 200,
-                    width: 200,
+                    height: 150,
+                    width: 150,
                   ),
                 ),
                 Text(
@@ -63,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: TextStyle(
                       fontFamily: GoogleFonts.chivo().fontFamily,
                       fontWeight: FontWeight.bold,
-                      fontSize: 42,
+                      fontSize: 38,
                       color: Colors.black),
                 ),
                 const Text(
@@ -76,10 +86,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextFormTextField(
-                          controller: _firstNameController,
-                          label: "First Name",
-                          inputType: TextInputType.name),
+                      child: TextFormField(
+                        validator: ((value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your First Name";
+                          }
+                          return null;
+                        }),
+                        controller: _firstNameController,
+                        decoration:
+                            const TextFormDecoration(labelString: "First Name"),
+                      ),
                     ),
                     const SizedBox(
                       width: 8,
