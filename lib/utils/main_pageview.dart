@@ -4,6 +4,7 @@ import 'package:dentmind_dental_centre/screens/help_screen.dart';
 import 'package:dentmind_dental_centre/screens/main_dashboard.dart';
 import 'package:dentmind_dental_centre/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MainPageView extends StatefulWidget {
   const MainPageView({Key? key}) : super(key: key);
@@ -18,6 +19,15 @@ class _MainPageViewState extends State<MainPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.dark),
+      ),
       bottomNavigationBar: BottomNavyBar(
           selectedIndex: _selectedIndex,
           onItemSelected: (value) {
