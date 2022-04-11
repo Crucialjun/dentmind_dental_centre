@@ -4,13 +4,14 @@ Dentmind Dental Care Appointment App
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a dental clinic appointment app for Dentmind Dental Centre .
 
-A few resources to get you started if this is your first Flutter project:
+Built using Flutter
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![image1](https://user-images.githubusercontent.com/26452884/162757645-16c9675a-2117-44a5-9dd8-aa3b0410df29.jpeg)
+
+![image2](https://user-images.githubusercontent.com/26452884/162757753-b5b8450d-3604-4990-9023-0aecbaecb5f1.jpeg)
+![image3](https://user-images.githubusercontent.com/26452884/162757771-94b72bae-b190-44f3-8e67-317f145f511b.jpeg)
+![image4](https://user-images.githubusercontent.com/26452884/162757774-8d46c625-4934-413f-93c5-6928f2d73287.jpeg)
+![image5](https://user-images.githubusercontent.com/26452884/162757778-ead2b958-d2c5-4c39-ac7a-bc69ecae0908.jpeg)
