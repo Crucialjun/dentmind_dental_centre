@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: ((context) => FirebaseStorageMethods())),
         FutureProvider<Client?>(
-          create: (context) =>
-              FirebaseStorageMethods().getClient(context.read<User>().uid),
+          create: (context) => FirebaseStorageMethods()
+              .getClient(context.read<User?>()?.uid ?? ""),
           initialData: null,
         )
       ],

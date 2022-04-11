@@ -206,6 +206,7 @@ class _HelpScreenState extends State<HelpScreen> {
                         "Get solutions beamed to your inbox",
                         style: TextStyle(color: Colors.black),
                       ),
+                      //Text widget with current date
                     ],
                   )
                 ],

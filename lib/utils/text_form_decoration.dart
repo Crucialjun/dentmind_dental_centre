@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../app_colors.dart';
 
 class TextFormDecoration extends InputDecoration {
-  const TextFormDecoration({required this.labelString});
+  const TextFormDecoration({required this.labelString, this.endingIcon});
 
   final String labelString;
+  final Widget? endingIcon;
+
   @override
   String? get labelText => labelString;
 
@@ -30,4 +32,7 @@ class TextFormDecoration extends InputDecoration {
   InputBorder? get focusedBorder => OutlineInputBorder(
       borderSide: const BorderSide(color: accentAppColor, width: 1.0),
       borderRadius: BorderRadius.circular(12.0));
+
+  @override
+  Widget? get suffixIcon => endingIcon;
 }

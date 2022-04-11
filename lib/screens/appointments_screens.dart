@@ -19,7 +19,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    appointmentsids = context.watch<Client?>()!.appointments;
+    appointmentsids = context.watch<Client?>()?.appointments ?? [];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -59,13 +59,28 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  return ListView.builder(
-                    itemCount: ((snapshot.data) as List<Appointment>).length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return AppointmentListCard(
-                        appointment: snapshot.data[index],
-                      );
-                    },
+                  if (((snapshot.data) as List).isNotEmpty) {
+                    return ListView.builder(
+                      itemCount: ((snapshot.data) as List<Appointment>).length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return AppointmentListCard(
+                          appointment: snapshot.data[index],
+                        );
+                      },
+                    );
+                  }
+                  return const Center(
+                    child: Text(
+                      "No Apppointments booked yet",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.redAccent),
+                    ),
                   );
                 },
               ),

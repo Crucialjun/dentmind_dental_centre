@@ -1,7 +1,7 @@
 import 'package:dentmind_dental_centre/app_colors.dart';
 import 'package:dentmind_dental_centre/firebase/firebase_auth.dart';
 import 'package:dentmind_dental_centre/global_constants.dart';
-import 'package:dentmind_dental_centre/utils/text_form_text_field.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
@@ -27,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordValid = false;
   bool _isLoading = false;
+  bool isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -91,7 +92,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value == null || value.isEmpty) {
                             return "Please enter your First Name";
                           }
-                          return null;
+                          if (!RegExp('[a-zA-Z]').hasMatch(value)) {
+                            return "Enter a valid name";
+                          } else {
+                            return null;
+                          }
                         }),
                         controller: _firstNameController,
                         decoration:
@@ -102,23 +107,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       width: 8,
                     ),
                     Expanded(
-                        child: TextFormTextField(
-                            controller: _lastNameController,
-                            label: "Last Name",
-                            inputType: TextInputType.name)),
+                      child: TextFormField(
+                        validator: ((value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your Last Name";
+                          }
+                          if (!RegExp('[a-zA-Z]').hasMatch(value)) {
+                            return "Enter a valid name";
+                          } else {
+                            return null;
+                          }
+                        }),
+                        controller: _lastNameController,
+                        decoration:
+                            const TextFormDecoration(labelString: "Last Name"),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormTextField(
-                    label: "Email",
-                    controller: _emailController,
-                    inputType: TextInputType.emailAddress),
+                TextFormField(
+                  decoration: const TextFormDecoration(labelString: "Email"),
+                  controller: _emailController,
+                  validator: ((value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your Email Address";
+                    }
+                    if (!EmailValidator.validate(value.trim())) {
+                      return "Enter a valid Email Address";
+                    } else {
+                      return null;
+                    }
+                  }),
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
+                    //add icon textformfield
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Please enter your password";
@@ -127,10 +155,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: isPasswordVisible ? false : true,
                     controller: _passwordController,
-                    decoration:
-                        const TextFormDecoration(labelString: "Set Password")),
+                    decoration: TextFormDecoration(
+                        labelString: "Set Password",
+                        endingIcon: InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (isPasswordVisible) {
+                                  isPasswordVisible = false;
+                                } else {
+                                  isPasswordVisible = true;
+                                }
+                              });
+                            },
+                            child: isPasswordVisible
+                                ? const Icon(Icons.visibility_off)
+                                : const Icon(Icons.visibility)))),
                 const SizedBox(
                   height: 4,
                 ),
